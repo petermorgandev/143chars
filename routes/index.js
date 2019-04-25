@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 var User = require('../models/user');
+var Message = require('../models/messages');
 var middle = require('../middleware');
 
 router.get('/', (req, res, next) => {
@@ -91,7 +92,18 @@ router.get('/new', middle.requiresLogin, (req, res, next) => {
 });
 
 router.post('/new', (req, res, next) => {
-  res.render('new');
+  var messageData = {
+    userId: req.session.userId,
+    message: req.body.messageInput
+  };
+
+  Message.create(messageData, function (error, user) {
+    if (error) {
+      return next(error);
+    } else {
+      return res.redirect('/profile');
+    }
+  });
 });
 
 router.get('/logout', (req, res, next) => {
