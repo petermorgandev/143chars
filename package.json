@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/PeterMorganGH/143chars/issues"
   },
-  "homepage": "https://github.com/PeterMorganGH/143chars#readme"
+  "homepage": "https://github.com/PeterMorganGH/143chars#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "pug": "^2.0.3"
+  }
 }
