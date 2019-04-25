@@ -1,9 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-/* mongoose, session, mongostore */
+const mongoose = require('mongoose');
+const session = require('express-session');
+/* mongostore */
 const app = express();
 
-/* mongodb connection */
+mongoose.connect('mongodb://localhost:27017/143chars', { useNewUrlParser: true});
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
 
 /* session tracking */
 
