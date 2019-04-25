@@ -3,8 +3,18 @@ const router = express.Router();
 var User = require('../models/user');
 var middle = require('../middleware');
 
-router.get('/', middle.homepage, (req, res, next) => {
-  return res.render('index', { title: 'Welcome' });
+router.get('/', (req, res, next) => {
+  if (!req.session.userId) {
+    return res.render('index', { title: 'Welcome' });
+  }
+  User.findById(req.session.userId)
+    .exec(function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.render('home', { title: 'Home' });
+      }
+    });
 });
 
 router.get('/register', middle.loggedOut, (req, res, next) => {
