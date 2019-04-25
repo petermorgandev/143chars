@@ -1,6 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+/* mongoose, session, mongostore */
 const app = express();
+
+/* mongodb connection */
+
+/* session tracking */
+
+/* pass user id into the templates */
 
 app.set('view engine', 'pug');
 
