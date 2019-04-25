@@ -15,6 +15,22 @@ app.use(routes);
 // serve static files from /public directory
 app.use(express.static('public'));
 
+// deal with 404 errors and pass along to generic error handler
+app.use(function(req, res, next){
+  var err = new Error('File Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// Generic error handler
+app.use(function(err, req, res, next){
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
+})
+
 // Create the server on port 3000
 app.listen(3000, () => {
   console.log('The application is running on http://localhost:3000');

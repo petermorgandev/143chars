@@ -1,44 +1,40 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.render('index', {title: 'Welcome'});  
+router.get('/', (req, res, next) => {
+  return res.render('index', {title: 'Welcome'});  
   // if logged in, go to home.pug ---- res.render('home'); 
 });
 
-router.get('/error', (req, res) => {
-  res.render('error', {title: 'Error'});  
+router.get('/register', (req, res, next) => {
+  return res.render('register', {title: 'Register'});  
 });
 
-router.get('/register', (req, res) => {
-  res.render('register', {title: 'Register'});  
-});
-
-router.post('/register', (req, res) => {
+router.post('/register', (req, res, next) => {
   res.render('register');  
 });
 
-router.get('/login', (req, res) => {
-  res.render('login', {title: 'Log In'});  
+router.get('/login', (req, res, next) => {
+  return res.render('login', {title: 'Log In'});  
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', (req, res, next) => {
   res.render('login');  
 });
 
-router.get('/profile', (req, res) => {
-  res.render('profile', {title: 'Your Profile'});  
+router.get('/profile', (req, res, next) => {
+  return res.render('profile', {title: 'Your Profile'});  
 });
 
-router.get('/new', (req, res) => {
-  res.render('new', {title: 'New Message'});  
+router.get('/new', (req, res, next) => {
+  return res.render('new', {title: 'New Message'});  
 });
 
-router.post('/new', (req, res) => {
+router.post('/new', (req, res, next) => {
   res.render('new');  
 });
 
-router.get('/logout', (req, res) => {
+router.get('/logout', (req, res, next) => {
   res.redirect('/');  
 });
 
