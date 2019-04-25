@@ -15,14 +15,5 @@ function requiresLogin(req, res, next) {
   }
 };
 
-function homepage(req, res, next) {
-  if (req.session && req.session.userID) {
-    return res.render('home', { title: Home });
-  } else {
-    return next();
-  }
-}
-
 module.exports.loggedOut = loggedOut;
 module.exports.requiresLogin = requiresLogin;
-module.exports.homepage = homepage;

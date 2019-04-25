@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
       if (error) {
         return next(error);
       } else {
-        return res.render('home', { title: 'Home' });
+        return res.render('home', { title: 'Home', username: user.username });
       }
     });
 });
