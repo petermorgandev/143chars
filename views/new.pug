@@ -2,7 +2,7 @@ extends layout
 
 block content
   .container
-    h3 Enter your new message
+    h3 New Message
     form(method='POST' action='/new')
       label(for='messageInput') Message
       textarea.u-full-width(type='text' id='messageInput' name='messageInput' placeholder='Enter your message')

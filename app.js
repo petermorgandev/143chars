@@ -1,9 +1,12 @@
 const express = require('express');
-const pug = require('pug');
-
+const bodyParser = require('body-parser');
 const app = express();
 
 app.set('view engine', 'pug');
+
+// parse incoming requests
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // include routes
 const routes = require('./routes/index');
