@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-/* user schema from models */
+var User = require('../models/user');
 /* middleware */
 
 router.get('/', (req, res, next) => {
