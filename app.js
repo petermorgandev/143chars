@@ -16,7 +16,10 @@ app.use(session({
   store: new mongoStore({ mongooseConnection: db })
 }));
 
-/* pass user id into the templates */
+app.use(function (req, res, next){
+  res.locals.currentUser = req.session.userId;
+  next();
+});
 
 app.set('view engine', 'pug');
 
@@ -28,14 +31,12 @@ app.use(routes);
 
 app.use(express.static('public'));
 
-// deal with 404 errors and pass along to generic error handler
 app.use(function (req, res, next) {
   var err = new Error('File Not Found');
   err.status = 404;
   next(err);
 });
 
-// Generic error handler
 app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
@@ -44,7 +45,6 @@ app.use(function (err, req, res, next) {
   });
 })
 
-// Create the server on port 3000
 app.listen(3000, () => {
   console.log('The application is running on http://localhost:3000');
 });
