@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+/* user schema from models */
+/* middleware */
 
 router.get('/', (req, res, next) => {
   return res.render('index', {title: 'Welcome'});  

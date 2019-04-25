@@ -15,15 +15,12 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 app.set('view engine', 'pug');
 
-// parse incoming requests
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// include routes
 const routes = require('./routes/index');
 app.use(routes);
 
-// serve static files from /public directory
 app.use(express.static('public'));
 
 // deal with 404 errors and pass along to generic error handler
