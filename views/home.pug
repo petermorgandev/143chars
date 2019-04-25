@@ -6,3 +6,7 @@ block content
       .twelve.columns
         h2 Welcome back #{username}!
         h3 Recent Messages
+        
+        ul
+        each message in messages
+          li #{message.userId} // #{message.message}
