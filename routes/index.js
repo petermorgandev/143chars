@@ -9,6 +9,7 @@ router.get('/', (req, res, next) => {
     return res.render('index', { title: 'Welcome' });
   }
   Message.find()
+    .sort({ date: -1 })
     .exec(function (error, messages) {
       if (error) {
         return next(error);
@@ -72,12 +73,13 @@ router.get('/profile', middle.requiresLogin, (req, res, next) => {
     err.status = 403;
     return next(err);
   }
-  Message.find({ userId: { $in: eq.session.userId } })
+  Message.find({ userId: { $in: req.session.userId } })
+    .sort({ date: -1 })
     .exec(function (error, messages) {
       if (error) {
         return next(error);
       } else {
-        return res.render('profile', { title: 'Home', messages: messages });
+        return res.render('profile', { title: 'Profile', messages: messages });
       }
     });
 
