@@ -4,6 +4,13 @@ block content
   .container
     h3 Your Messages
 
-    ul
-    each message in messages
-      li #{message.userId} // #{message.message}
+    if messages
+      ul
+      each message in messages
+        li #{message.userId} // #{message.message}
+    
+    else
+      p 
+        | You should submit a 
+        a(href='/new/') new 
+        | message
