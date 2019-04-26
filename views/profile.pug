@@ -3,3 +3,7 @@ extends layout
 block content
   .container
     h3 Your Messages
+
+    ul
+    each message in messages
+      li #{message.userId} // #{message.message}

@@ -72,38 +72,15 @@ router.get('/profile', middle.requiresLogin, (req, res, next) => {
     err.status = 403;
     return next(err);
   }
-  User.findById(req.session.userId)
-    .exec(function (error, user) {
-      if (error) {
-        return next(error);
-      } else {
-        return res.render('profile', { title: 'Your Profile' });
-      }
-    });
-    
-});
-
-/* 
-db.messages.find({userId: '5cc22091f4f20f2a496deead'})
-db.messages.find({userId: req.session.userId}) 
-*/
-
-router.get('/profile2', middle.requiresLogin, (req, res, next) => {
-  if (!req.session.userId) {
-    var err = new Error('You are not authorized to view this page.');
-    err.status = 403;
-    return next(err);
-  }
-  Message.find()
+  Message.find({ userId: { $in: eq.session.userId } })
     .exec(function (error, messages) {
       if (error) {
         return next(error);
       } else {
-        var test = messages;
-        return res.render('profile', { title: 'Your Profile', test: test /* i think the messages go in here */ });
+        return res.render('profile', { title: 'Home', messages: messages });
       }
     });
-    
+
 });
 
 router.get('/new', middle.requiresLogin, (req, res, next) => {
