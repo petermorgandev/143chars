@@ -3,7 +3,11 @@ extends layout
 block content
   .row
     .col
-      h3.mt-4 Your Profile
+      h3.mt-4 Your Profile 
+        if messages.length === 1
+          small #{messages.length} Message
+        else
+          small #{messages.length} Messages
   
   .row
     .col
