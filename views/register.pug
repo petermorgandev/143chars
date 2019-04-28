@@ -16,7 +16,5 @@ block content
       .form-group
         label(for='avatar') Avatar
         select(name="avatarInput" id='avatar' class='form-control')
-          option coolshades
-          option robot
-          option skier
+          include includes/avatars.pug
       button.btn.btn-primary(type='submit') Register
