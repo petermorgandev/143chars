@@ -9,6 +9,7 @@
 * Seperated avatar options to /includes/avatar.pug
 * Switched navbar to dark theme
 * Updated title on user profile page to display username
+* Users can now change thier avatar
 
 ## 4/27/19
 * Added SVG avatars

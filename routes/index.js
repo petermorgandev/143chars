@@ -130,6 +130,19 @@ router.get('/settings', middle.requiresLogin, (req, res, next) => {
   return res.render('settings', { title: 'User Settings' });
 });
 
+router.post('/settings', function (req, res, next) {
+  if (!req.session.userId) {
+    var err = new Error('You are not authorized to view this page.');
+    err.status = 403;
+    return next(err);
+  }
+
+  User.findOneAndUpdate({ _id: req.session.userId }, { $set: { avatar: req.body.avatarInput } }, function (error, doc) {
+    return res.redirect('/');
+  });
+
+});
+
 router.get('/logout', (req, res, next) => {
   if (req.session) {
     req.session.destroy(function (err) {
