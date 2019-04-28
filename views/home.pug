@@ -1,12 +1,19 @@
 extends layout
 
 block content
-  .container
-    .row
-      .twelve.columns
-        h2 Welcome back #{username}!
-        h3 Recent Messages
-        
-        ul
-        each message in messages
-          li #{message.date} // #{message.userId} // #{message.message}
+  .row
+    .col
+      h2 Welcome back!
+      h3 Recent Messages
+  
+  .row
+    .col
+      ul.list-unstyled
+      each message in messages
+        li.media.mb-4
+          img(src='https://www.svgrepo.com/show/13644/avatar.svg' width='64' height='64' class='mr-3' alt='')
+          .media-body
+            |
+            h5(class='mt-0 mb-1') #{message.message}
+            |
+            | #{message.userId} // Posted: #{message.date.toDateString()}
