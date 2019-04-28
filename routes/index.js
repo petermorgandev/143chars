@@ -127,7 +127,17 @@ router.post('/new', (req, res, next) => {
 });
 
 router.get('/settings', middle.requiresLogin, (req, res, next) => {
-  return res.render('settings', { title: 'User Settings' });
+
+  User.find({ _id: { $in: req.session.userId } })
+  .exec(function(error, user){
+    if (error){
+      return next(error);
+    } else {
+      return res.render('settings', { title: 'User Settings', username: user[0].username });
+    }
+  });
+
+  
 });
 
 router.post('/settings', function (req, res, next) {
@@ -137,7 +147,7 @@ router.post('/settings', function (req, res, next) {
     return next(err);
   }
 
-  User.findOneAndUpdate({ _id: req.session.userId }, { $set: { avatar: req.body.avatarInput } }, function (error, doc) {
+  User.findOneAndUpdate({ _id: req.session.userId }, { $set: { avatar: req.body.avatarInput, username: req.body.usernameInput } }, function (error, doc) {
     return res.redirect('/');
   });
 
