@@ -23,7 +23,7 @@ UserSchema.statics.authenticate = function (username, password, callback) {
       else if (!user) {
         var err = new Error('User not found');
         err.status = 401;
-        return callback;
+        return callback(err);
       }
       bcrypt.compare(password, user.password, function (error, result) {
         if (result === true) {
