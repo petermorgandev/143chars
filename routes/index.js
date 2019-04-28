@@ -24,10 +24,11 @@ router.get('/register', middle.loggedOut, (req, res, next) => {
 });
 
 router.post('/register', (req, res, next) => {
-  if (req.body.usernameInput && req.body.passwordInput) {
+  if (req.body.usernameInput && req.body.passwordInput && req.body.avatarInput) {
     var userData = {
       username: req.body.usernameInput,
-      password: req.body.passwordInput
+      password: req.body.passwordInput,
+      avatar: req.body.avatarInput
     };
 
     User.create(userData, function (error, user) {
