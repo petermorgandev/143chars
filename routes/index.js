@@ -93,7 +93,7 @@ router.get('/profile/:userid', middle.requiresLogin, (req, res, next) => {
       if (error) {
         return next(error);
       } else {
-        return res.render('profile', { title: 'Profile', messages: messages });
+        return res.render('profile', { title: messages[0].user.username + '\'s Profile', messages: messages });
       }
     });
 });
