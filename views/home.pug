@@ -10,9 +10,9 @@ block content
       ul.list-unstyled
       each message in messages
         li.media.mb-4
-          img(src='https://www.svgrepo.com/show/13644/avatar.svg' width='64' height='64' class='mr-3' alt='')
+          img(src='avatars/' + message.user.avatar + '.svg' width='64' height='64' class='mr-3' alt='')
           .media-body
             |
             h5(class='mt-0 mb-1') #{message.message}
             |
-            | #{message.userId} // Posted: #{message.date.toDateString()}
+            | Posted by #{message.user.username} on #{message.date.toDateString()}   
