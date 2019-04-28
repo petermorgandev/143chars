@@ -1,16 +1,23 @@
 .container
   .row
-    .twelve.columns
-      img(src='../img/logo.png' alt='143chars Logo')
-.container
-  .row
-    .twelve.columns
-      a.button(href='/') Home
+    img(src='../img/logo.png' alt='143chars Logo')
+
+nav.navbar.navbar-expand-md.navbar-light.bg-light
+  a.navbar-brand(href="/") Home
+  button(class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
+    span.navbar-toggler-icon
+  div(class="collapse navbar-collapse" id="navbarSupportedContent")
+    ul.navbar-nav.mr-auto
       if !currentUser
-        a.button(href='/register') Register
+        li.nav-item
+          a.nav-link(href='/register') Register
       if currentUser
-        a.button(href='/profile') Profile
-        a.button(href='/new') New Msg
-        a.button(href='/logout') Log Out
+        li.nav-item
+          a.nav-link(href='/profile') Profile
+        li.nav-item
+          a.nav-link(href='/new') New Msg
+        li.nav-item
+          a.nav-link(href='/logout') Log Out
       else
-        a.button(href='/login') Log In
+        li.nav-item
+          a.nav-link(href='/login') Log In
