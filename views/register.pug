@@ -2,12 +2,15 @@ extends layout
 
 block content
   .container
+    .row
+      h3.mt-4 Register
+    
+    .row
     form(method='POST' action='/register')
-      .row
-        .six.columns
-          label(for='usernameInput') Username
-          input.u-full-width(type='text' id='username' name='usernameInput' placeholder='Enter your desired username')
-        .six.columns
-          label(for='passwordInput') Password
-          input.u-full-width(type='password' id='password' name='passwordInput' placeholder='Enter your desired password')
-      input.button-primary(type='submit' value='Register')
+      .form-group
+        label(for='username') Username
+        input.form-control(type='text' id='username' name='usernameInput' placeholder='Enter your desired username')
+      .form-group
+        label(for='password') Password
+        input.form-control(type='password' id='password' name='passwordInput' placeholder='Enter your desired password')
+      button.btn.btn-primary(type='submit') Register

@@ -2,12 +2,15 @@ extends layout
 
 block content
   .container
+    .row
+      h3.mt-4 Log In
+    
+    .row
     form(method='POST' action='/login')
-      .row
-        .six.columns
-          label(for='usernameInput') Username
-          input.u-full-width(type='text' id='username' name='usernameInput' placeholder='Enter your username')
-        .six.columns
-          label(for='passwordInput') Password
-          input.u-full-width(type='password' id='password' name='passwordInput' placeholder='Enter your password')
-      input.button-primary(type='submit' value='Log In')
+      .form-group
+        label(for='username') Username
+        input.form-control(type='text' id='username' name='usernameInput' placeholder='Enter your username')
+      .form-group
+        label(for='password') Password
+        input.form-control(type='password' id='password' name='passwordInput' placeholder='Enter your password')
+      button.btn.btn-primary(type='submit') Log In

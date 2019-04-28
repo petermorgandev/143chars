@@ -1,9 +1,13 @@
 extends layout
 
 block content
-  .container
-    h3 New Message
-    form(method='POST' action='/new')
-      label(for='messageInput') Message
-      textarea.u-full-width(type='text' id='messageInput' name='messageInput' placeholder='Enter your message')
-      input.button-primary(type='submit' value='Send Message')
+  .row
+    .col
+      h3.mt-4 New Message
+
+  .row
+    .col
+      form(method='POST' action='/new')
+        .form-group
+          textarea.form-control(type='text' id='messageInput' name='messageInput' placeholder='Enter your message')
+        button.btn.btn-primary(type='submit') Send Message
