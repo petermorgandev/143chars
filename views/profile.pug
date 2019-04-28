@@ -3,7 +3,7 @@ extends layout
 block content
   .row
     .col
-      h3.mt-4 Your Profile 
+      h3.mt-4 #{messages[0].user.username}'s Profile 
         if messages.length === 1
           small #{messages.length} Message
         else
@@ -14,9 +14,11 @@ block content
       ul.list-unstyled
       each message in messages
         li.media.mb-4
-          img(src='avatars/' + message.user.avatar + '.svg' width='64' height='64' class='mr-3' alt='')
+          img(src='../../avatars/' + message.user.avatar + '.svg' width='64' height='64' class='mr-3' alt='')
           .media-body
             |
             h5(class='mt-0 mb-1') #{message.message}
             |
-            | Posted by you on #{message.date.toDateString()}        
+            | Posted by 
+            a(href='profile/' + message.user._id + '/') @#{message.user.username} 
+            | on #{message.date.toDateString()}      

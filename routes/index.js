@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
   }
   Message.find()
     .sort({ date: -1 })
-    .populate('user', 'avatar username')
+    .populate('user', '-password')
     .exec(function (error, messages) {
       if (error) {
         return next(error);
@@ -76,7 +76,17 @@ router.get('/profile', middle.requiresLogin, (req, res, next) => {
     err.status = 403;
     return next(err);
   }
-  Message.find({ user: { $in: req.session.userId } })
+
+  return res.redirect('/profile/' + req.session.userId);
+});
+
+router.get('/profile/:userid', middle.requiresLogin, (req, res, next) => {
+  if (!req.session.userId) {
+    var err = new Error('You are not authorized to view this page.');
+    err.status = 403;
+    return next(err);
+  }
+  Message.find({ user: { $in: req.params.userid } })
     .sort({ date: -1 })
     .populate('user', 'avatar username')
     .exec(function (error, messages) {
@@ -86,7 +96,6 @@ router.get('/profile', middle.requiresLogin, (req, res, next) => {
         return res.render('profile', { title: 'Profile', messages: messages });
       }
     });
-
 });
 
 router.get('/new', middle.requiresLogin, (req, res, next) => {

@@ -1,7 +1,6 @@
 nav.navbar.navbar-expand-md.navbar-light.bg-light
   .container
-    a(class='navbar-brand' href="/")
-      img(src='../img/logo.png' alt='143chars Logo')
+    a(class='navbar-brand' href="/") 143chars
     button(class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
       span.navbar-toggler-icon
     div(class="collapse navbar-collapse" id="navbarSupportedContent")
@@ -11,7 +10,7 @@ nav.navbar.navbar-expand-md.navbar-light.bg-light
             a(class='nav-link' href='/register') Register
         if currentUser
           li.nav-item
-            a(class='nav-link' href='/profile') Profile
+            a(class='nav-link' href='/profile/' + currentUser + '') Profile 
           li.nav-item
             a(class='nav-link' href='/new') New Msg
           li.nav-item

@@ -15,4 +15,6 @@ block content
             |
             h5(class='mt-0 mb-1') #{message.message}
             |
-            | Posted by #{message.user.username} on #{message.date.toDateString()}   
+            | Posted by 
+            a(href='profile/' + message.user._id + '/') @#{message.user.username} 
+            | on #{message.date.toDateString()}   
