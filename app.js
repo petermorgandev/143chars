@@ -8,6 +8,7 @@ const app = express();
 
 app.locals.moment = require('moment');
 
+mongoose.set('useFindAndModify', false);
 mongoose.connect('mongodb://localhost:27017/143chars', { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
