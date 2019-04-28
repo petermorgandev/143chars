@@ -1,10 +1,6 @@
 var mongoose = require('mongoose');
 
 var MessageSchema = new mongoose.Schema({
-  userId: {
-    type: String,
-    required: true
-  },
   message: {
     type: String,
     required: true,
@@ -13,6 +9,10 @@ var MessageSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'User'
   }
 });
 

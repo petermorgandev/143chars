@@ -10,6 +10,7 @@ router.get('/', (req, res, next) => {
   }
   Message.find()
     .sort({ date: -1 })
+    .populate('user', 'avatar username')
     .exec(function (error, messages) {
       if (error) {
         return next(error);
@@ -75,8 +76,9 @@ router.get('/profile', middle.requiresLogin, (req, res, next) => {
     err.status = 403;
     return next(err);
   }
-  Message.find({ userId: { $in: req.session.userId } })
+  Message.find({ user: { $in: req.session.userId } })
     .sort({ date: -1 })
+    .populate('user', 'avatar username')
     .exec(function (error, messages) {
       if (error) {
         return next(error);
@@ -99,7 +101,8 @@ router.get('/new', middle.requiresLogin, (req, res, next) => {
 router.post('/new', (req, res, next) => {
   var messageData = {
     userId: req.session.userId,
-    message: req.body.messageInput
+    message: req.body.messageInput,
+    user: req.session.userId,
   };
 
   Message.create(messageData, function (error, user) {
