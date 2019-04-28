@@ -16,6 +16,6 @@ block content
             h5(class='mt-0 mb-1') #{message.message}
             |
             | Posted by 
-            a(href='profile/' + message.user._id + '/') @#{message.user.username} 
-            | on 
-            span= moment(message.date).format('M/D/YYYY h:ma') 
+            a(href='profile/' + message.user._id + '/') @#{message.user.username}
+            | 
+            span(title=moment(message.date).format('MMMM D, YYYY h:mma')) #{moment(message.date).fromNow()}
