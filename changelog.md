@@ -25,9 +25,9 @@
 * Added date to display of messages
 * Added middleware to restrict access to pages if visitor is logged in or not
 * All messages are displayed on the homepage
-* Created Message Model
-* Created User Model
-* Date added to Message Model
+* Created Message model
+* Created User model
+* Date added to Message model
 * Implemented session storing
 * Messages are now displayed sorted by date
 * Messages are now stored in the database
