@@ -3,7 +3,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const mongoStore = require('connect-mongo')(session);
+const moment = require('moment');
 const app = express();
+
+app.locals.moment = require('moment');
 
 mongoose.connect('mongodb://localhost:27017/143chars', { useNewUrlParser: true });
 var db = mongoose.connection;

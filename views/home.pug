@@ -17,4 +17,5 @@ block content
             |
             | Posted by 
             a(href='profile/' + message.user._id + '/') @#{message.user.username} 
-            | on #{message.date.toDateString()}   
+            | on 
+            span= moment(message.date).format('M/D/YYYY h:ma') 

@@ -23,6 +23,7 @@
     "connect-mongo": "^2.0.3",
     "express": "^4.16.4",
     "express-session": "^1.16.1",
+    "moment": "^2.24.0",
     "mongoose": "^5.5.3",
     "pug": "^2.0.3"
   }
