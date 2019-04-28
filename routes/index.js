@@ -123,6 +123,10 @@ router.post('/new', (req, res, next) => {
   });
 });
 
+router.get('/settings', middle.requiresLogin, (req, res, next) => {
+  return res.render('settings', { title: 'User Settings' });
+});
+
 router.get('/logout', (req, res, next) => {
   if (req.session) {
     req.session.destroy(function (err) {
