@@ -80,16 +80,16 @@ router.get('/profile', middle.requiresLogin, (req, res, next) => {
   return res.redirect('/profile/' + req.session.userId);
 });
 
-router.get('/profile/:userid', middle.requiresLogin, async function (req, res, next) {
+router.get('/profile/:userId', middle.requiresLogin, async function (req, res, next) {
   if (!req.session.userId) {
     var err = new Error('You are not authorized to view this page.');
     err.status = 403;
     return next(err);
   }
 
-  const user = await User.findOne({ _id: { $in: req.params.userid } });
+  const user = await User.findOne({ _id: { $in: req.params.userId } });
 
-  await Message.find({ user: { $in: req.params.userid } })
+  await Message.find({ user: { $in: req.params.userId } })
     .sort({ date: -1 })
     .populate('user', 'avatar username')
     .exec(function (error, messages, username) {
