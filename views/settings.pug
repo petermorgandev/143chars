@@ -1,19 +1,18 @@
 extends layout
 
 block content
-  .container
-    .row
-      .col
-        h3.mt-4 Settings
-    
-    .row
-      .col
-        form(method='POST' action='/settings')
-          .form-group
-            label(for='username') Username
-            input.form-control(type='text' id='username' name='usernameInput' value=username) 
-          .form-group
-            label(for='avatar') Avatar
-            select(name="avatarInput" id='avatar' class='form-control')
-              include includes/avatars.pug
-          button.btn.btn-primary(type='submit') Update
+  .row
+    .col
+      h3.mt-4 Settings
+  
+  .row
+    .col
+      form(method='POST' action='/settings')
+        .form-group
+          label(for='username') Username
+          input.form-control(type='text' id='username' name='usernameInput' value=username) 
+        .form-group
+          label(for='avatar') Avatar
+          select(name="avatarInput" id='avatar' class='form-control')
+            include includes/avatars.pug
+        button.btn.btn-primary(type='submit') Update

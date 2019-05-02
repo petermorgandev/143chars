@@ -1,22 +1,21 @@
 extends layout
 
 block content
-  .container
-    .row
-      .col
-        h3.mt-4 Register
-    
-    .row
-      .col
-        form(method='POST' action='/register')
-          .form-group
-            label(for='username') Username
-            input.form-control(type='text' id='username' name='usernameInput' placeholder='Enter your desired username')
-          .form-group
-            label(for='password') Password
-            input.form-control(type='password' id='password' name='passwordInput' placeholder='Enter your desired password')
-          .form-group
-            label(for='avatar') Avatar
-            select(name="avatarInput" id='avatar' class='form-control')
-              include includes/avatars.pug
-          button.btn.btn-primary(type='submit') Register
+  .row
+    .col
+      h3.mt-4 Register
+  
+  .row
+    .col
+      form(method='POST' action='/register')
+        .form-group
+          label(for='username') Username
+          input.form-control(type='text' id='username' name='usernameInput' placeholder='Enter your desired username')
+        .form-group
+          label(for='password') Password
+          input.form-control(type='password' id='password' name='passwordInput' placeholder='Enter your desired password')
+        .form-group
+          label(for='avatar') Avatar
+          select(name="avatarInput" id='avatar' class='form-control')
+            include includes/avatars.pug
+        button.btn.btn-primary(type='submit') Register

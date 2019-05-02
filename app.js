@@ -1,10 +1,11 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const session = require('express-session');
-const mongoStore = require('connect-mongo')(session);
-const moment = require('moment');
-const app = express();
+const express = require('express'),
+      bodyParser = require('body-parser'),
+      mongoose = require('mongoose'),
+      session = require('express-session'),
+      mongoStore = require('connect-mongo')(session),
+      moment = require('moment'),
+      app = express(),
+      routes = require('./routes/index');
 
 app.locals.moment = require('moment');
 
@@ -31,7 +32,6 @@ app.set('view engine', 'pug');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const routes = require('./routes/index');
 app.use(routes);
 
 app.use(express.static('public'));
