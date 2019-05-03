@@ -1,5 +1,9 @@
 # Changes
 
+## 5/2/19
+* Fixed Bootstrap container issue
+* Navbar now visible on small viewport
+
 ## 4/28/19
 * Added more SVG avatars
 * Changed the page title and username displayed on the profile page to async/await
