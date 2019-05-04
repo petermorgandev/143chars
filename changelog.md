@@ -1,7 +1,7 @@
 # Changes
 
 ## 5/4/19
-* Users can now delete individual messages
+* Users can now delete individual messages or all of their  messages on the settings page
 
 ## 5/2/19
 * Fixed Bootstrap container issue
