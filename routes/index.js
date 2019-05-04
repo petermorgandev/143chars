@@ -133,7 +133,7 @@ router.get('/settings', middle.requiresLogin, (req, res, next) => {
       if (error) {
         return next(error);
       } else {
-        return res.render('settings', { title: 'User Settings', username: user[0].username });
+        return res.render('settings', { title: 'User Settings', username: user[0].username, userId: req.session.userId });
       }
     });
 
@@ -160,6 +160,23 @@ router.get('/delete/message/:messageId', middle.requiresLogin, async function (r
   }
 
   Message.deleteOne({ _id: { $in: req.params.messageId } })
+    .exec(function (error) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.redirect('/profile');
+      }
+    });
+});
+
+router.get('/delete/messages/:userId', middle.requiresLogin, async function (req, res, next) {
+  if (!req.session.userId) {
+    var err = new Error('You are not authorized to view this page.');
+    err.status = 403;
+    return next(err);
+  }
+
+  Message.deleteMany({ user: { $in: req.params.userId } })
     .exec(function (error) {
       if (error) {
         return next(error);
