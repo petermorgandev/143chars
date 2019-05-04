@@ -1,7 +1,12 @@
 # Changes
 
 ## 5/4/19
-* Users can now delete individual messages or all of their  messages on the settings page
+* Added authentication to /delete routes.
+  * Users cannot delete other users' messages or accounts.
+* Settings page update:
+  * Users can now delete all of their messages
+  * Users can now delete their account (and all of their messages)
+* Users can now delete individual messages
 
 ## 5/2/19
 * Fixed Bootstrap container issue

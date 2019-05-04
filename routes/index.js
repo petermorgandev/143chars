@@ -153,13 +153,16 @@ router.post('/settings', function (req, res, next) {
 });
 
 router.get('/delete/message/:messageId', middle.requiresLogin, async function (req, res, next) {
-  if (!req.session.userId) {
+  
+  const userId = await Message.findById({_id: req.params.messageId});
+
+  if (!req.session.userId || userId.user != req.session.userId) {
     var err = new Error('You are not authorized to view this page.');
     err.status = 403;
     return next(err);
   }
 
-  Message.deleteOne({ _id: { $in: req.params.messageId } })
+  await Message.deleteOne({ _id: { $in: req.params.messageId } })
     .exec(function (error) {
       if (error) {
         return next(error);
@@ -169,8 +172,8 @@ router.get('/delete/message/:messageId', middle.requiresLogin, async function (r
     });
 });
 
-router.get('/delete/messages/:userId', middle.requiresLogin, async function (req, res, next) {
-  if (!req.session.userId) {
+router.get('/delete/messages/:userId', middle.requiresLogin,  function (req, res, next) {
+  if (!req.session.userId || req.session.userId != req.params.userId) {
     var err = new Error('You are not authorized to view this page.');
     err.status = 403;
     return next(err);
@@ -186,13 +189,32 @@ router.get('/delete/messages/:userId', middle.requiresLogin, async function (req
     });
 });
 
+router.get('/delete/user/:userId', middle.requiresLogin, async function (req, res, next) {
+  if (!req.session.userId || req.session.userId != req.params.userId) {
+    var err = new Error('You are not authorized to view this page.');
+    err.status = 403;
+    return next(err);
+  }
+
+  await Message.deleteMany({ user: { $in: req.session.userId } });
+
+  await User.deleteOne({ _id: req.session.userId })
+    .exec(function (error) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.redirect('/logout');
+      }
+    });
+});
+
 router.get('/logout', (req, res, next) => {
   if (req.session) {
     req.session.destroy(function (err) {
       if (err) {
         return next(err);
       } else {
-        res.redirect('/');
+        return res.redirect('/');
       }
     });
   }

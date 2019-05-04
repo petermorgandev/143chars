@@ -6,14 +6,8 @@ block content
       h3.my-4 Settings
   
   .row.mb-4
-    .col.border.border-danger.p-3
-      h4.mb-3 Danger Zone
-      a.btn.btn-danger(href='/delete/messages/' + userId) Delete All Messages
-      | 
-      a.btn.btn-danger(href='#') Delete Account
-
-  .row
-    .col
+    .col.border.border-success.rounded-lg.py-3
+      h4.mb-3 User Options
       form(method='POST' action='/settings')
         .form-group
           label(for='username') Username
@@ -23,3 +17,12 @@ block content
           select(name="avatarInput" id='avatar' class='form-control')
             include includes/avatars.pug
         button.btn.btn-primary(type='submit') Update
+
+  .row
+    .col.border.border-danger.rounded-lg.py-3
+      h4.mb-3 Danger Zone
+      p These options are irreversible!
+      a.btn.btn-danger(href='/delete/messages/' + userId) Delete All Messages
+      | 
+      a.btn.btn-danger(href='/delete/user/' + userId) Delete Account
+
