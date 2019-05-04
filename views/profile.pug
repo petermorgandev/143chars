@@ -20,4 +20,6 @@ block content
             h5(class='mt-0 mb-1') #{message.message}
             |
             | Posted  
-            span(title=moment(message.date).format('MMMM D, YYYY h:mma')) #{moment(message.date).fromNow()}
+            span(title=moment(message.date).format('MMMM D, YYYY h:mma')) #{moment(message.date).fromNow()} 
+            if profileId === userId
+              a(href='/delete/message/' + message._id class='badge badge-danger') Delete

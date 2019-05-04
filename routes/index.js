@@ -96,7 +96,7 @@ router.get('/profile/:userId', middle.requiresLogin, async function (req, res, n
       if (error) {
         return next(error);
       } else {
-        return res.render('profile', { title: user.username + '\'s Profile', messages: messages, username: user.username });
+        return res.render('profile', { title: user.username + '\'s Profile', messages: messages, username: user.username, profileId: req.params.userId, userId: req.session.userId });
       }
     });
 });
@@ -129,15 +129,14 @@ router.post('/new', (req, res, next) => {
 router.get('/settings', middle.requiresLogin, (req, res, next) => {
 
   User.find({ _id: { $in: req.session.userId } })
-  .exec(function(error, user){
-    if (error){
-      return next(error);
-    } else {
-      return res.render('settings', { title: 'User Settings', username: user[0].username });
-    }
-  });
+    .exec(function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.render('settings', { title: 'User Settings', username: user[0].username });
+      }
+    });
 
-  
 });
 
 router.post('/settings', function (req, res, next) {
@@ -151,6 +150,23 @@ router.post('/settings', function (req, res, next) {
     return res.redirect('/');
   });
 
+});
+
+router.get('/delete/message/:messageId', middle.requiresLogin, async function (req, res, next) {
+  if (!req.session.userId) {
+    var err = new Error('You are not authorized to view this page.');
+    err.status = 403;
+    return next(err);
+  }
+
+  Message.deleteOne({ _id: { $in: req.params.messageId } })
+    .exec(function (error) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.redirect('/profile');
+      }
+    });
 });
 
 router.get('/logout', (req, res, next) => {

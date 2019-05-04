@@ -1,5 +1,8 @@
 # Changes
 
+## 5/4/19
+* Users can now delete individual messages
+
 ## 5/2/19
 * Fixed Bootstrap container issue
 * Navbar now visible on small viewport
