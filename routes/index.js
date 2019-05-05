@@ -1,8 +1,8 @@
-const express = require('express');
-const router = express.Router();
-var User = require('../models/user');
-var Message = require('../models/messages');
-var middle = require('../middleware');
+const express = require('express'),
+  router = express.Router(),
+  User = require('../models/user'),
+  Message = require('../models/messages'),
+  middle = require('../middleware');
 
 router.get('/', (req, res, next) => {
   if (!req.session.userId) {
@@ -96,7 +96,7 @@ router.get('/profile/:userId', middle.requiresLogin, async function (req, res, n
       if (error) {
         return next(error);
       } else {
-        return res.render('profile', { title: user.username + '\'s Profile', messages: messages, username: user.username, profileId: req.params.userId, userId: req.session.userId});
+        return res.render('profile', { title: user.username + '\'s Profile', messages: messages, username: user.username, profileId: req.params.userId, userId: req.session.userId });
       }
     });
 });
@@ -153,8 +153,8 @@ router.post('/settings', function (req, res, next) {
 });
 
 router.get('/delete/message/:messageId', middle.requiresLogin, async function (req, res, next) {
-  
-  const userId = await Message.findById({_id: req.params.messageId});
+
+  const userId = await Message.findById({ _id: req.params.messageId });
 
   if (!req.session.userId || userId.user != req.session.userId) {
     var err = new Error('You are not authorized to view this page.');
@@ -172,7 +172,7 @@ router.get('/delete/message/:messageId', middle.requiresLogin, async function (r
     });
 });
 
-router.get('/delete/messages/:userId', middle.requiresLogin,  function (req, res, next) {
+router.get('/delete/messages/:userId', middle.requiresLogin, function (req, res, next) {
   if (!req.session.userId || req.session.userId != req.params.userId) {
     var err = new Error('You are not authorized to view this page.');
     err.status = 403;
@@ -222,8 +222,6 @@ router.get('/logout', (req, res, next) => {
 
 
 // API routes
-
-// get api/messages
 router.get('/api', function (req, res, next) {
   Message.find()
     .sort({ date: -1 })
@@ -237,7 +235,6 @@ router.get('/api', function (req, res, next) {
     });
 });
 
-// get /user/:userId
 router.get('/api/user/:userId', async function (req, res, next) {
 
   const user = await User.findOne({ _id: { $in: req.params.userId } });
@@ -251,12 +248,10 @@ router.get('/api/user/:userId', async function (req, res, next) {
       } else {
         return res.json(messages);
       }
-    }); 
+    });
 
 });
 
-
-// delete delete/message/:messageId
 router.delete('/api/delete/message/:messageId', function (req, res, next) {
 
   /* const userId = await Message.findById({_id: req.params.messageId});
@@ -277,7 +272,6 @@ router.delete('/api/delete/message/:messageId', function (req, res, next) {
     });
 });
 
-// delete delete/messages/:userId
 router.delete('/api/delete/messages/:userId', /* middle.requiresLogin, */  function (req, res, next) {
   /*  if (!req.session.userId || req.session.userId != req.params.userId) {
     var err = new Error('You are not authorized to view this page.');
@@ -293,6 +287,19 @@ router.delete('/api/delete/messages/:userId', /* middle.requiresLogin, */  funct
         return res.json({ message: 'Messages delete.' });
       }
     });
+});
+
+router.get('/api/user/:userId/settings',/*  middle.requiresLogin, */ (req, res, next) => {
+
+  User.find({ _id: { $in: req.params.userId } }, {password: false})
+    .exec(function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.json(user);
+      }
+    });
+
 });
 
 // post /register
