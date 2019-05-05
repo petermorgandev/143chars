@@ -96,7 +96,7 @@ router.get('/profile/:userId', middle.requiresLogin, async function (req, res, n
       if (error) {
         return next(error);
       } else {
-        return res.render('profile', { title: user.username + '\'s Profile', messages: messages, username: user.username, profileId: req.params.userId, userId: req.session.userId });
+        return res.render('profile', { title: user.username + '\'s Profile', messages: messages, username: user.username, profileId: req.params.userId, userId: req.session.userId});
       }
     });
 });
@@ -219,5 +219,93 @@ router.get('/logout', (req, res, next) => {
     });
   }
 });
+
+
+// API routes
+
+// get api/messages
+router.get('/api', function (req, res, next) {
+  Message.find()
+    .sort({ date: -1 })
+    .populate('user', '-password')
+    .exec(function (error, messages) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.json(messages);
+      }
+    });
+});
+
+// get /profile/:userId
+router.get('api/profile/:userId', async function (req, res, next) {
+
+  const user = await User.findOne({ _id: { $in: req.params.userId } });
+
+  await Message.find({ user: { $in: req.params.userId } })
+    .sort({ date: -1 })
+    .populate('user', 'avatar username')
+    .exec(function (error, messages, username) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.json(messages);
+
+      }
+    });
+
+  Message.find()
+    .sort({ date: -1 })
+    .populate('user', '-password')
+    .exec(function (error, messages) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.json(messages);
+      }
+    });
+});
+
+
+// delete delete/message/:messageId
+router.delete('api/delete/message/:messageId', function (req, res, next) {
+
+  /* const userId = await Message.findById({_id: req.params.messageId});
+
+  if (!req.session.userId || userId.user != req.session.userId) {
+    var err = new Error('You are not authorized to view this page.');
+    err.status = 403;
+    return next(err);
+  } */
+
+  Message.deleteOne({ _id: { $in: req.params.messageId } })
+    .exec(function (error) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.json({ message: 'Message delete.' });
+      }
+    });
+});
+
+// delete delete/messages/:userId
+router.delete('api/delete/messages/:userId', /* middle.requiresLogin, */  function (req, res, next) {
+  /*  if (!req.session.userId || req.session.userId != req.params.userId) {
+    var err = new Error('You are not authorized to view this page.');
+    err.status = 403;
+    return next(err);
+  } */
+
+  Message.deleteMany({ user: { $in: req.params.userId } })
+    .exec(function (error) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.json({ message: 'Messages delete.' });
+      }
+    });
+});
+
+
 
 module.exports = router;
