@@ -302,11 +302,28 @@ router.get('/api/user/:userId/settings',/*  middle.requiresLogin, */ (req, res, 
 
 });
 
+router.delete('/api/delete/user/:userId', /* middle.requiresLogin, */ async function (req, res, next) {
+  /* if (!req.session.userId || req.session.userId != req.params.userId) {
+    var err = new Error('You are not authorized to view this page.');
+    err.status = 403;
+    return next(err);
+  } */
+
+  await Message.deleteMany({ user: { $in: req.params.userId } });
+
+  await User.deleteOne({ _id: req.params.userId })
+    .exec(function (error) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.json('User - and their messages - deleted.');
+      }
+    });
+});
+
 // post /register
 // post /login
 // post /messages
-// get /settings
 // put /settings
-// delete delete/user/:userId
 
 module.exports = router;
