@@ -306,6 +306,11 @@ router.delete('api/delete/messages/:userId', /* middle.requiresLogin, */  functi
     });
 });
 
-
+// post /register
+// post /login
+// post /messages
+// get /settings
+// put /settings
+// delete delete/user/:userId
 
 module.exports = router;
