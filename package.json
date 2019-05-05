@@ -2,7 +2,7 @@
   "name": "143chars",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,6 +25,7 @@
     "express-session": "^1.16.1",
     "moment": "^2.24.0",
     "mongoose": "^5.5.3",
+    "morgan": "^1.9.1",
     "pug": "^2.0.3"
   }
 }
