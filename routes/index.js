@@ -237,38 +237,27 @@ router.get('/api', function (req, res, next) {
     });
 });
 
-// get /profile/:userId
-router.get('api/profile/:userId', async function (req, res, next) {
+// get /user/:userId
+router.get('/api/user/:userId', async function (req, res, next) {
 
   const user = await User.findOne({ _id: { $in: req.params.userId } });
 
   await Message.find({ user: { $in: req.params.userId } })
     .sort({ date: -1 })
     .populate('user', 'avatar username')
-    .exec(function (error, messages, username) {
-      if (error) {
-        return next(error);
-      } else {
-        return res.json(messages);
-
-      }
-    });
-
-  Message.find()
-    .sort({ date: -1 })
-    .populate('user', '-password')
     .exec(function (error, messages) {
       if (error) {
         return next(error);
       } else {
         return res.json(messages);
       }
-    });
+    }); 
+
 });
 
 
 // delete delete/message/:messageId
-router.delete('api/delete/message/:messageId', function (req, res, next) {
+router.delete('/api/delete/message/:messageId', function (req, res, next) {
 
   /* const userId = await Message.findById({_id: req.params.messageId});
 
@@ -289,7 +278,7 @@ router.delete('api/delete/message/:messageId', function (req, res, next) {
 });
 
 // delete delete/messages/:userId
-router.delete('api/delete/messages/:userId', /* middle.requiresLogin, */  function (req, res, next) {
+router.delete('/api/delete/messages/:userId', /* middle.requiresLogin, */  function (req, res, next) {
   /*  if (!req.session.userId || req.session.userId != req.params.userId) {
     var err = new Error('You are not authorized to view this page.');
     err.status = 403;
