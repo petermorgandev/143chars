@@ -6,9 +6,25 @@ const express = require('express'),
   moment = require('moment'),
   logger = require('morgan'),
   app = express(),
-  routes = require('./routes/index');
+  routes = require('./routes/index'),
+  port = process.env.PORT || 3000;
 
 app.locals.moment = require('moment');
+
+/*
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,DELETE');
+    return res.status(200).json({});
+  }
+  next();
+});
+
+
+*/
 
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
@@ -52,6 +68,6 @@ app.use(function (err, req, res, next) {
   });
 })
 
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log('The application is running on http://localhost:3000');
 });
