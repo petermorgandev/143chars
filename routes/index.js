@@ -252,6 +252,19 @@ router.get('/api/user/:userId', async function (req, res, next) {
 
 });
 
+router.get('/api/user/:userId/settings',/*  middle.requiresLogin, */ (req, res, next) => {
+
+  User.find({ _id: { $in: req.params.userId } }, {password: false})
+    .exec(function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.json(user);
+      }
+    });
+
+});
+
 router.delete('/api/delete/message/:messageId', function (req, res, next) {
 
   /* const userId = await Message.findById({_id: req.params.messageId});
@@ -287,19 +300,6 @@ router.delete('/api/delete/messages/:userId', /* middle.requiresLogin, */  funct
         return res.json({ message: 'Messages delete.' });
       }
     });
-});
-
-router.get('/api/user/:userId/settings',/*  middle.requiresLogin, */ (req, res, next) => {
-
-  User.find({ _id: { $in: req.params.userId } }, {password: false})
-    .exec(function (error, user) {
-      if (error) {
-        return next(error);
-      } else {
-        return res.json(user);
-      }
-    });
-
 });
 
 router.delete('/api/delete/user/:userId', /* middle.requiresLogin, */ async function (req, res, next) {
