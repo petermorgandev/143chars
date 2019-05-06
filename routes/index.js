@@ -321,7 +321,30 @@ router.delete('/api/delete/user/:userId', /* middle.requiresLogin, */ async func
     });
 });
 
-// post /register
+router.post('/api/new/user', (req, res, next) => {
+  if (req.body.usernameInput && req.body.passwordInput && req.body.avatarInput) {
+    var userData = {
+      username: req.body.usernameInput,
+      password: req.body.passwordInput,
+      avatar: req.body.avatarInput
+    };
+
+    User.create(userData, function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        //req.session.userId = user._id;
+        return res.json('User created');
+      }
+    });
+  } else {
+    var err = new Error('All fields are required to register.');
+    err.status = 400;
+    return next(err);
+  } 
+});
+
+
 // post /login
 // post /messages
 // put /settings
