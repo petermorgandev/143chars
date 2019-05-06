@@ -1,5 +1,11 @@
 # Changes
 
+## 5/5/19
+* Began implementation of API:
+  * Added cors via NPM
+  * Added initial API routes
+  * Added morgan via NPM for additional logging
+
 ## 5/4/19
 * Added authentication to /delete routes.
   * Users cannot delete other users' messages or accounts.

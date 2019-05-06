@@ -21,6 +21,7 @@
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
     "connect-mongo": "^2.0.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-session": "^1.16.1",
     "moment": "^2.24.0",
