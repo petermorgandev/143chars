@@ -5,6 +5,7 @@ const express = require('express'),
   mongoStore = require('connect-mongo')(session),
   moment = require('moment'),
   logger = require('morgan'),
+  cors = require('cors'),
   app = express(),
   routes = require('./routes/index'),
   port = process.env.PORT || 3000;
@@ -47,8 +48,9 @@ app.use(function (req, res, next) {
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
+app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(routes);
 
