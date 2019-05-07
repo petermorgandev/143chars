@@ -7,7 +7,6 @@ const express = require('express'),
   logger = require('morgan'),
   cors = require('cors'),
   app = express(),
-  routes = require('./routes/index'),
   port = process.env.PORT || 3000;
 
 app.locals.moment = require('moment');
@@ -52,7 +51,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(routes);
+app.use('/', require('./routes/server'));
+app.use('/api', require('./routes/api'));
 
 app.use(express.static('public'));
 
