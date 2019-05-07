@@ -252,9 +252,9 @@ router.get('/api/user/:userId', async function (req, res, next) {
 
 });
 
-router.get('/api/user/:userId/settings',/*  middle.requiresLogin, */ (req, res, next) => {
+router.get('/api/user/:userId/settings',/*  middle.requiresLogin, */(req, res, next) => {
 
-  User.find({ _id: { $in: req.params.userId } }, {password: false})
+  User.find({ _id: { $in: req.params.userId } }, { password: false })
     .exec(function (error, user) {
       if (error) {
         return next(error);
@@ -341,9 +341,27 @@ router.post('/api/new/user', (req, res, next) => {
     var err = new Error('All fields are required to register.');
     err.status = 400;
     return next(err);
-  } 
+  }
 });
 
+router.post('/api/login', (req, res, next) => {
+  if (req.body.usernameInput && req.body.passwordInput) {
+    User.authenticate(req.body.usernameInput, req.body.passwordInput, function (error, user) {
+      if (error || !user) {
+        var err = new Error('Wrong username or password.');
+        err.status = 401;
+        return next(err);
+      } else {
+        req.session.userId = user._id;;
+        return res.json({id: user._id, avatar: user.avatar, username: user.username});
+      }
+    });
+  } else {
+    var err = new Error('Username and password are required to log in.');
+    err.status = 401;
+    return next(err);
+  }
+});
 
 // post /login
 // post /messages
