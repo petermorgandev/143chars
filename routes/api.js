@@ -47,6 +47,14 @@ router.get('/user/:userId/settings',/*  middle.requiresLogin, */(req, res, next)
 
 });
 
+router.put('/user/:userId/settings/update', function (req, res, next) {
+
+  User.findOneAndUpdate({ _id: req.params.userId }, { $set: { avatar: req.body.avatarInput, username: req.body.usernameInput } }, function (error, doc) {
+    return res.json('User updated');
+  });
+
+});
+
 router.delete('/delete/message/:messageId', function (req, res, next) {
 
   /* const userId = await Message.findById({_id: req.params.messageId});
@@ -146,6 +154,5 @@ router.post('/login', (req, res, next) => {
 });
 
 // post /messages
-// put /settings
 
 module.exports = router;

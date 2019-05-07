@@ -1,5 +1,8 @@
 # Changes
 
+## 5/6/19
+* Seperated routes into routes/api.js and routes/server.js
+
 ## 5/5/19
 * Began implementation of API:
   * Added cors via NPM
