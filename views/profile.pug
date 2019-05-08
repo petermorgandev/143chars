@@ -11,15 +11,15 @@ block content
   
   .row
     .col
-      ul.list-unstyled
-      each message in messages
-        li.media.mb-4
-          img(src='../../avatars/' + message.user.avatar + '.svg' width='64' height='64' class='mr-3' alt='')
-          .media-body
-            |
-            h5(class='mt-0 mb-1') #{message.message}
-            |
-            | Posted  
-            span(title=moment(message.date).format('MMMM D, YYYY h:mma')) #{moment(message.date).fromNow()} 
-            if profileId === userId
-              a(href='/delete/message/' + message._id class='badge badge-danger') Delete
+      ul.list-unstyled.mt-2
+        each message in messages
+          li.media.mb-4
+            img(src='../../avatars/' + message.user.avatar + '.svg' width='64' height='64' class='mr-3' alt='')
+            .media-body
+              |
+              h5(class='mt-0 mb-1') #{message.message}
+              |
+              | Posted  
+              span(title=moment(message.date).format('MMMM D, YYYY h:mma')) #{moment(message.date).fromNow()} 
+              if profileId === userId
+                a(href='/delete/message/' + message._id class='badge badge-danger') Delete
