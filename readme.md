@@ -2,7 +2,7 @@
 
 143chars is a Twitter-like website built on Node.js/Express and MongoDB.
 
-## Table of contents
+## Table of Contents
 
   - [Features](#features)
   - [Getting Started](#getting-started)
