@@ -8,6 +8,7 @@
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installing](#installing)
+  - [API](#api)
   - [Technologies](#technologies)
   - [Acknowledgments](#acknowledgments)
 
@@ -50,6 +51,21 @@ With MongoDB running, start the application
 node app.js
 ```
 Visit localhost:3000 in your web browser
+
+## API
+|Method|Route|Action|
+|---|---|---|
+|GET|/|Retrieve all messages|
+|GET|/user/:userId|Retrieve user's messages|
+|GET|/user/:userId/settings|Retrieve user's settings|
+|POST|/new/user|Create new user|
+|POST|/new/message|Create new message|
+|POST|/login|Login in user|
+|DELETE|/delete/message/:messageId|Delete message|
+|DELETE|/delete/messages/:userId|Delete all of user's messages|
+|DELETE|/delete/user/:userId|Delete user's messages and account|
+|PUT|/user/:userId/settings/update|Update user's settings|
+
 
 ## Technologies
 Project built with:

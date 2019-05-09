@@ -134,6 +134,22 @@ router.post('/new/user', (req, res, next) => {
   }
 });
 
+router.post('/new/message', (req, res, next) => {
+  var messageData = {
+    userId: req.body.userId,
+    message: req.body.messageInput,
+    user: req.body.userId
+  };
+
+  Message.create(messageData, function (error, user) {
+    if (error) {
+      return next(error);
+    } else {
+      return res.json('Message created');
+    }
+  });
+});
+
 router.post('/login', (req, res, next) => {
   if (req.body.usernameInput && req.body.passwordInput) {
     User.authenticate(req.body.usernameInput, req.body.passwordInput, function (error, user) {
@@ -151,22 +167,6 @@ router.post('/login', (req, res, next) => {
     err.status = 401;
     return next(err);
   }
-});
-
-router.post('/new/message', (req, res, next) => {
-  var messageData = {
-    userId: req.body.userId,
-    message: req.body.messageInput,
-    user: req.body.userId
-  };
-
-  Message.create(messageData, function (error, user) {
-    if (error) {
-      return next(error);
-    } else {
-      return res.json('Message created');
-    }
-  });
 });
 
 module.exports = router;

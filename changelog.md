@@ -1,5 +1,8 @@
 # Changes
 
+## 5/9/19
+* Added API POST route for /new/message
+
 ## 5/6/19
 * Seperated routes into routes/api.js and routes/server.js
 
