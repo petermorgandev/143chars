@@ -7,6 +7,10 @@ const express = require('express'),
   logger = require('morgan'),
   cors = require('cors'),
   app = express(),
+  corsOptions = {
+    origin: 'http://localhost:8080',
+    credentials: true,
+  },
   port = process.env.PORT || 3000;
 
 app.locals.moment = require('moment');
@@ -47,7 +51,7 @@ app.use(function (req, res, next) {
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
