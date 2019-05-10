@@ -169,4 +169,16 @@ router.post('/login', (req, res, next) => {
   }
 });
 
+router.get('/logout', (req, res, next) => {
+  if (req.session) {
+    req.session.destroy(function (err) {
+      if (err) {
+        return next(err);
+      } else {
+        return res.json('User logged out');
+      }
+    });
+  }
+});
+
 module.exports = router;
