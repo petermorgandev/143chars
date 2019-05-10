@@ -17,12 +17,12 @@ block content
             label(for='avatar') Avatar
             select(name="avatarInput" id='avatar' class='form-control')
               include includes/avatars.pug
-          button.btn.btn-primary(type='submit') Update
+          button.btn.btn-success(type='submit') Update
     .col-md-6.p-1
       .border.border-danger.rounded-lg.p-3
         h4.mb-3 Danger Zone
         p These options are irreversible!
-        a.btn.btn-danger(href='/delete/messages/' + userId) Delete All Messages
+        a.btn.btn-outline-danger(href='/delete/messages/' + userId) Delete All Messages
         | 
-        a.btn.btn-danger(href='/delete/user/' + userId) Delete Account
+        a.btn.btn-outline-danger(href='/delete/user/' + userId) Delete Account
 
