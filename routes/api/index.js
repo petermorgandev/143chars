@@ -1,8 +1,8 @@
 const express = require('express'),
   router = express.Router(),
-  User = require('../models/user'),
-  Message = require('../models/messages'),
-  middle = require('../middleware');
+  User = require('../../models/user'),
+  Message = require('../../models/messages'),
+  middle = require('../../middleware');
 
 router.get('/', function (req, res, next) {
   Message.find()
