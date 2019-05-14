@@ -1,7 +1,7 @@
 const express = require('express'),
-userRoutes = express.Router([{mergeParams: true}]),
-User = require('../../models/user'),
-Message = require('../../models/messages');
+  userRoutes = express.Router([{ mergeParams: true }]),
+  User = require('../../models/user'),
+  Message = require('../../models/messages');
 
 
 userRoutes.get('/:userId', async function (req, res, next) {

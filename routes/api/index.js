@@ -29,7 +29,7 @@ api.post('/login', (req, res, next) => {
         return next(err);
       } else {
         req.session.userId = user._id;
-        return res.json({id: user._id, avatar: user.avatar, username: user.username});
+        return res.json({ id: user._id, avatar: user.avatar, username: user.username });
       }
     });
   } else {

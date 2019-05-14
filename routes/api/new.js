@@ -1,7 +1,7 @@
 const express = require('express'),
-newRoutes = express.Router(),
-User = require('../../models/user'),
-Message = require('../../models/messages');
+  newRoutes = express.Router(),
+  User = require('../../models/user'),
+  Message = require('../../models/messages');
 
 
 newRoutes.post('/user', (req, res, next) => {

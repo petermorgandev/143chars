@@ -1,7 +1,7 @@
 const express = require('express'),
-deleteRoutes = express.Router([{mergeParams: true}]),
-User = require('../../models/user'),
-Message = require('../../models/messages');
+  deleteRoutes = express.Router([{ mergeParams: true }]),
+  User = require('../../models/user'),
+  Message = require('../../models/messages');
 
 
 deleteRoutes.delete('/message/:messageId', function (req, res, next) {
