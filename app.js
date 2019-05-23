@@ -12,7 +12,7 @@ const express = require("express"),
     credentials: true
   },
   dotenv = require("dotenv").config(),
-  port = process.env.HTTP_SERVER_Port || 3000,
+  port = process.env.Port || 3000,
   MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/143chars",
   SESSION_SECRET = process.env.SESSION_SECRET;
 
