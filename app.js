@@ -13,7 +13,7 @@ const express = require("express"),
   },
   dotenv = require("dotenv").config(),
   port = process.env.HTTP_SERVER_Port || 3000,
-  MONGO_URI = process.env.MONGO_URI,
+  MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/143chars",
   SESSION_SECRET = process.env.SESSION_SECRET;
 
 app.locals.moment = require("moment");
