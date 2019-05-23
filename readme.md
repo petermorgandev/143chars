@@ -44,10 +44,12 @@ Install the required packages with npm
 npm install
 ```
 
-Change the MongoDB connection settings in app.js if you are using MongoDB with customized settings
+Create a .env file: Some variables are stored in a special file named ".env". You will need to create the .env file in the project's root directory and make some changes. At the most basic level you will need to add a string for the SESSION_SECRET. You can also change the other values if needed.
 
 ```
-mongoose.connect('mongodb://<your_custom_server_address>:<your_custom_port_used>/143chars', { useNewUrlParser: true });
+HTTP_SERVER_Port = 3000
+MONGO_URI = mongodb://localhost:27017/143chars
+SESSION_SECRET =
 ```
 
 With MongoDB running, start the application
