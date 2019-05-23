@@ -11,28 +11,16 @@ const express = require("express"),
     origin: "http://localhost:8080",
     credentials: true
   },
-  port = process.env.PORT || 3000;
+  dotenv = require("dotenv").config(),
+  port = process.env.HTTP_SERVER_Port || 3000,
+  MONGO_URI = process.env.MONGO_URI,
+  SESSION_SECRET = process.env.SESSION_SECRET;
 
 app.locals.moment = require("moment");
 
-/*
-
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', 'PUT,POST,DELETE');
-    return res.status(200).json({});
-  }
-  next();
-});
-
-
-*/
-
 mongoose.set("useFindAndModify", false);
 mongoose.set("useCreateIndex", true);
-mongoose.connect("mongodb://localhost:27017/143chars", {
+mongoose.connect(MONGO_URI, {
   useNewUrlParser: true
 });
 var db = mongoose.connection;
@@ -40,7 +28,7 @@ db.on("error", console.error.bind(console, "connection error:"));
 
 app.use(
   session({
-    secret: "this is a super secret phrase",
+    secret: SESSION_SECRET,
     resave: true,
     saveUninitialized: false,
     store: new mongoStore({ mongooseConnection: db })
