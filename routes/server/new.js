@@ -12,7 +12,7 @@ router.get("/", middle.requiresLogin, (req, res, next) => {
   return res.render("new", { title: "New Message" });
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", middle.requiresLogin, (req, res, next) => {
   var messageData = {
     userId: req.session.userId,
     message: req.body.messageInput,
