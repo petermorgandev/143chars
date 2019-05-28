@@ -1,7 +1,7 @@
-const express = require("express"),
-  userRoutes = express.Router([{ mergeParams: true }]),
-  User = require("../../models/user"),
-  Message = require("../../models/messages");
+const express = require("express");
+const userRoutes = express.Router([{ mergeParams: true }]);
+const User = require("../../models/user");
+const Message = require("../../models/messages");
 
 userRoutes.get("/:userId", async function(req, res, next) {
   const user = await User.findOne({ _id: { $in: req.params.userId } });
@@ -12,9 +12,8 @@ userRoutes.get("/:userId", async function(req, res, next) {
     .exec(function(error, messages) {
       if (error) {
         return next(error);
-      } else {
-        return res.json(messages);
       }
+      return res.json(messages);
     });
 });
 
@@ -25,9 +24,8 @@ userRoutes.get(
       function(error, user) {
         if (error) {
           return next(error);
-        } else {
-          return res.json(user);
         }
+        return res.json(user);
       }
     );
   }

@@ -1,11 +1,11 @@
-const express = require("express"),
-  api = express.Router(),
-  userRoutes = require("./user"),
-  newRoutes = require("./new"),
-  deleteRoutes = require("./delete"),
-  User = require("../../models/user"),
-  Message = require("../../models/messages"),
-  middle = require("../../middleware");
+const express = require("express");
+const api = express.Router();
+const userRoutes = require("./user");
+const newRoutes = require("./new");
+const deleteRoutes = require("./delete");
+const User = require("../../models/user");
+const Message = require("../../models/messages");
+const middle = require("../../middleware");
 
 api.get("/", function(req, res, next) {
   Message.find()
@@ -14,9 +14,8 @@ api.get("/", function(req, res, next) {
     .exec(function(error, messages) {
       if (error) {
         return next(error);
-      } else {
-        return res.json(messages);
       }
+      return res.json(messages);
     });
 });
 
@@ -27,7 +26,7 @@ api.post("/login", (req, res, next) => {
       user
     ) {
       if (error || !user) {
-        var err = new Error("Wrong username or password.");
+        const err = new Error("Wrong username or password.");
         err.status = 401;
         return next(err);
       } else {
@@ -40,7 +39,7 @@ api.post("/login", (req, res, next) => {
       }
     });
   } else {
-    var err = new Error("Username and password are required to log in.");
+    const err = new Error("Username and password are required to log in.");
     err.status = 401;
     return next(err);
   }
@@ -51,9 +50,8 @@ api.get("/logout", (req, res, next) => {
     req.session.destroy(function(err) {
       if (err) {
         return next(err);
-      } else {
-        return res.json("User logged out");
       }
+      return res.json("User logged out");
     });
   }
 });

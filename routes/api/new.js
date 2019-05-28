@@ -1,7 +1,7 @@
-const express = require("express"),
-  newRoutes = express.Router(),
-  User = require("../../models/user"),
-  Message = require("../../models/messages");
+const express = require("express");
+const  newRoutes = express.Router();
+const  User = require("../../models/user");
+const  Message = require("../../models/messages");
 
 newRoutes.post("/user", (req, res, next) => {
   if (
@@ -9,7 +9,7 @@ newRoutes.post("/user", (req, res, next) => {
     req.body.passwordInput &&
     req.body.avatarInput
   ) {
-    var userData = {
+    const userData = {
       username: req.body.usernameInput,
       password: req.body.passwordInput,
       avatar: req.body.avatarInput
@@ -18,20 +18,19 @@ newRoutes.post("/user", (req, res, next) => {
     User.create(userData, function(error, user) {
       if (error) {
         return next(error);
-      } else {
-        //req.session.userId = user._id;
-        return res.json("User created");
       }
+      //req.session.userId = user._id;
+      return res.json("User created");
     });
   } else {
-    var err = new Error("All fields are required to register.");
+    const err = new Error("All fields are required to register.");
     err.status = 400;
     return next(err);
   }
 });
 
 newRoutes.post("/message", (req, res, next) => {
-  var messageData = {
+  const messageData = {
     userId: req.body.userId,
     message: req.body.messageInput,
     user: req.body.userId
@@ -40,9 +39,8 @@ newRoutes.post("/message", (req, res, next) => {
   Message.create(messageData, function(error, user) {
     if (error) {
       return next(error);
-    } else {
-      return res.json("Message created");
     }
+    return res.json("Message created");
   });
 });
 
