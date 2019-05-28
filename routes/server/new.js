@@ -3,12 +3,12 @@ const express = require("express"),
   Message = require("../../models/messages"),
   { requiresLogin } = require("../../middleware");
 
-router.get("/", requiresLogin, (req, res, next) => {
-  return res.render("new", { title: "New Message" });
-});
+router.get("/", requiresLogin, (req, res, next) =>
+  res.render("new", { title: "New Message" })
+);
 
 router.post("/", requiresLogin, (req, res, next) => {
-  var messageData = {
+  let messageData = {
     userId: req.session.userId,
     message: req.body.messageInput,
     user: req.session.userId

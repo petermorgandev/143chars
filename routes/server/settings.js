@@ -1,38 +1,30 @@
 const express = require("express"),
   router = express.Router(),
   User = require("../../models/user"),
-  middle = require("../../middleware");
+  { requiresLogin } = require("../../middleware");
 
-router.get("/", middle.requiresLogin, (req, res, next) => {
-  User.find({ _id: { $in: req.session.userId } }).exec(function(error, user) {
-    if (error) {
-      return next(error);
-    } else {
-      return res.render("settings", {
+router.get("/", requiresLogin, (req, res, next) => {
+  User.find({ _id: { $in: req.session.userId } })
+    .exec()
+    .then(user =>
+      res.render("settings", {
         title: "User Settings",
         username: user[0].username,
         userId: req.session.userId
-      });
-    }
-  });
+      })
+    )
+    .catch(error => next(error));
 });
 
-router.post("/", function(req, res, next) {
-  if (!req.session.userId) {
-    var err = new Error("You are not authorized to view this page.");
-    err.status = 403;
-    return next(err);
-  }
-
-  User.findOneAndUpdate(
-    { _id: req.session.userId },
-    {
-      $set: { avatar: req.body.avatarInput, username: req.body.usernameInput }
-    },
-    function(error, doc) {
-      return res.redirect("/");
-    }
-  );
+router.post("/", requiresLogin, (req, res, next) => {
+  const condition = { _id: req.session.userId };
+  const fieldsToUpdate = {
+    $set: { avatar: req.body.avatarInput, username: req.body.usernameInput }
+  };
+  User.findOneAndUpdate(condition, fieldsToUpdate)
+    .exec()
+    .then(() => res.redirect("/"))
+    .catch(error => next(error));
 });
 
 module.exports = router;

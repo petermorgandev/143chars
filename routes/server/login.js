@@ -3,9 +3,9 @@ const express = require("express"),
   User = require("../../models/user"),
   middle = require("../../middleware");
 
-router.get("/", middle.loggedOut, (req, res, next) => {
-  return res.render("login", { title: "Log In" });
-});
+router.get("/", middle.loggedOut, (req, res, next) =>
+  res.render("login", { title: "Log In" })
+);
 
 router.post("/", (req, res, next) => {
   if (req.body.usernameInput && req.body.passwordInput) {

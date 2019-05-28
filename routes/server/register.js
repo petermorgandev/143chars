@@ -1,11 +1,11 @@
 const express = require("express"),
   router = express.Router(),
   User = require("../../models/user"),
-  middle = require("../../middleware");
+  { loggedOut } = require("../../middleware");
 
-router.get("/", middle.loggedOut, (req, res, next) => {
-  return res.render("register", { title: "Register" });
-});
+router.get("/", loggedOut, (req, res, next) =>
+  res.render("register", { title: "Register" })
+);
 
 router.post("/", (req, res, next) => {
   if (
