@@ -15,13 +15,9 @@ router.get("/", (req, res, next) => {
   Message.find()
     .sort({ date: -1 })
     .populate("user", "-password")
-    .exec(function(error, messages) {
-      if (error) {
-        return next(error);
-      } else {
-        return res.render("home", { title: "Home", messages: messages });
-      }
-    });
+    .exec()
+    .then(messages => res.render("home", { title: "Home", messages: messages }))
+    .catch(error => next(error));
 });
 
 router.get("/logout", (req, res, next) => {
