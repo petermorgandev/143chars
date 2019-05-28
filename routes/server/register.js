@@ -3,9 +3,9 @@ const express = require("express"),
   User = require("../../models/user"),
   { loggedOut } = require("../../middleware");
 
-router.get("/", loggedOut, (req, res, next) => {
-  return res.render("register", { title: "Register" });
-});
+router.get("/", loggedOut, (req, res, next) =>
+  res.render("register", { title: "Register" })
+);
 
 router.post("/", (req, res, next) => {
   if (
