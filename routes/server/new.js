@@ -1,14 +1,12 @@
-const express = require("express"),
-  router = express.Router(),
-  Message = require("../../models/messages"),
-  { requiresLogin } = require("../../middleware");
+const express = require("express");
+const router = express.Router();
+const Message = require("../../models/messages");
+const { requiresLogin } = require("../../middleware");
 
-router.get("/", requiresLogin, (req, res, next) =>
-  res.render("new", { title: "New Message" })
-);
+router.get("/", requiresLogin, (req, res) => res.render("new", { title: "New Message" }));
 
 router.post("/", requiresLogin, (req, res, next) => {
-  let messageData = {
+  const messageData = {
     userId: req.session.userId,
     message: req.body.messageInput,
     user: req.session.userId
@@ -17,9 +15,8 @@ router.post("/", requiresLogin, (req, res, next) => {
   Message.create(messageData, function(error, user) {
     if (error) {
       return next(error);
-    } else {
-      return res.redirect("/profile");
     }
+    return res.redirect("/profile");
   });
 });
 

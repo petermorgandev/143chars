@@ -1,7 +1,7 @@
-var mongoose = require("mongoose");
-var bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
-var UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -21,7 +21,7 @@ UserSchema.statics.authenticate = function(username, password, callback) {
     if (error) {
       return callback(error);
     } else if (!user) {
-      var err = new Error("User not found");
+      const err = new Error("User not found");
       err.status = 401;
       return callback(err);
     }
@@ -46,5 +46,5 @@ UserSchema.pre("save", function(next) {
   });
 });
 
-var User = mongoose.model("User", UserSchema);
+const User = mongoose.model("User", UserSchema);
 module.exports = User;
