@@ -15,5 +15,20 @@ function requiresLogin(req, res, next) {
   }
 }
 
+function isCurrentUser(req, res, next) {
+  if (
+    req.session &&
+    req.session.userId &&
+    req.session.userId === req.params.userId
+  ) {
+    return next();
+  } else {
+    var err = new Error("You are not authorized to view this page.");
+    err.status = 403;
+    return next(err);
+  }
+}
+
 module.exports.loggedOut = loggedOut;
 module.exports.requiresLogin = requiresLogin;
+module.exports.isCurrentUser = isCurrentUser;
