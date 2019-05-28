@@ -30,13 +30,14 @@ router.get("/:userId", middle.requiresLogin, async function(req, res, next) {
       if (error) {
         return next(error);
       } else {
-        return res.render("profile", {
+        let userData = {
           title: user.username + "'s Profile",
           messages: messages,
           username: user.username,
           profileId: req.params.userId,
           userId: req.session.userId
-        });
+        };
+        return res.render("profile", userData);
       }
     });
 });
