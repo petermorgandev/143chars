@@ -1,6 +1,6 @@
-var mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-var MessageSchema = new mongoose.Schema({
+const MessageSchema = new mongoose.Schema({
   message: {
     type: String,
     required: true,
@@ -16,5 +16,5 @@ var MessageSchema = new mongoose.Schema({
   }
 });
 
-var Message = mongoose.model("Message", MessageSchema);
+const Message = mongoose.model('Message', MessageSchema);
 module.exports = Message;

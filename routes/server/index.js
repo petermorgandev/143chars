@@ -1,12 +1,13 @@
-const express = require("express"),
-  router = express.Router(),
-  deleteRoutes = require("./delete"),
-  logIn = require("./login"),
-  newRoutes = require("./new"),
-  profile = require("./profile"),
-  register = require("./register"),
-  settingsRoutes = require("./settings"),
-  Message = require("../../models/messages");
+const express = require("express");
+const router = express.Router();
+const deleteRoutes = require("./delete");
+const logIn = require("./login");
+const newRoutes = require("./new");
+const profile = require("./profile");
+const register = require("./register");
+const settingsRoutes = require("./settings");
+const Message = require("../../models/messages");
+
 
 router.get("/", (req, res, next) => {
   if (!req.session.userId) {
@@ -16,7 +17,7 @@ router.get("/", (req, res, next) => {
     .sort({ date: -1 })
     .populate("user", "-password")
     .exec()
-    .then(messages => res.render("home", { title: "Home", messages: messages }))
+    .then(messages => res.render("home", { title: "Home", messages }))
     .catch(error => next(error));
 });
 
@@ -25,9 +26,8 @@ router.get("/logout", (req, res, next) => {
     req.session.destroy(function(err) {
       if (err) {
         return next(err);
-      } else {
-        return res.redirect("/");
       }
+      return res.redirect("/");
     });
   }
 });

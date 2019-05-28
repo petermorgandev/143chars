@@ -1,14 +1,14 @@
-const express = require("express"),
-  router = express.Router([{ mergeParams: true }]),
-  User = require("../../models/user"),
-  Message = require("../../models/messages"),
-  { requiresLogin, isCurrentUser } = require("../../middleware");
+const express = require("express");
+const router = express.Router([{ mergeParams: true }]);
+const User = require("../../models/user");
+const Message = require("../../models/messages");
+const { requiresLogin, isCurrentUser } = require("../../middleware");
 
 router.get("/message/:messageId", requiresLogin, async (req, res, next) => {
-  const userId = await Message.findById({ _id: req.params.messageId });
+  const getUserId = await Message.findById({ _id: req.params.messageId });
 
-  if (!req.session.userId || userId.user != req.session.userId) {
-    var err = new Error("You are not authorized to view this page.");
+  if (!req.session.userId || getUserId.user != req.session.userId) {
+    const err = new Error("You are not authorized to view this page.");
     err.status = 403;
     return next(err);
   }
