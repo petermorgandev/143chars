@@ -28,44 +28,38 @@ router.get("/message/:messageId", middle.requiresLogin, async function(
   });
 });
 
-router.get("/messages/:userId", middle.requiresLogin, function(req, res, next) {
-  if (!req.session.userId || req.session.userId != req.params.userId) {
-    var err = new Error("You are not authorized to view this page.");
-    err.status = 403;
-    return next(err);
+router.get(
+  "/messages/:userId",
+  middle.requiresLogin,
+  middle.isCurrentUser,
+  function(req, res, next) {
+    Message.deleteMany({ user: { $in: req.params.userId } }).exec(function(
+      error
+    ) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.redirect("/profile");
+      }
+    });
   }
+);
 
-  Message.deleteMany({ user: { $in: req.params.userId } }).exec(function(
-    error
-  ) {
-    if (error) {
-      return next(error);
-    } else {
-      return res.redirect("/profile");
-    }
-  });
-});
+router.get(
+  "/user/:userId",
+  middle.requiresLogin,
+  middle.isCurrentUser,
+  async function(req, res, next) {
+    await Message.deleteMany({ user: { $in: req.session.userId } });
 
-router.get("/user/:userId", middle.requiresLogin, async function(
-  req,
-  res,
-  next
-) {
-  if (!req.session.userId || req.session.userId != req.params.userId) {
-    var err = new Error("You are not authorized to view this page.");
-    err.status = 403;
-    return next(err);
+    await User.deleteOne({ _id: req.session.userId }).exec(function(error) {
+      if (error) {
+        return next(error);
+      } else {
+        return res.redirect("/logout");
+      }
+    });
   }
-
-  await Message.deleteMany({ user: { $in: req.session.userId } });
-
-  await User.deleteOne({ _id: req.session.userId }).exec(function(error) {
-    if (error) {
-      return next(error);
-    } else {
-      return res.redirect("/logout");
-    }
-  });
-});
+);
 
 module.exports = router;
