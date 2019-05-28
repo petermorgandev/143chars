@@ -1,9 +1,9 @@
 const express = require("express"),
   router = express.Router(),
   User = require("../../models/user"),
-  middle = require("../../middleware");
+  { requiresLogin } = require("../../middleware");
 
-router.get("/", middle.requiresLogin, (req, res, next) => {
+router.get("/", requiresLogin, (req, res, next) => {
   User.find({ _id: { $in: req.session.userId } }).exec(function(error, user) {
     if (error) {
       return next(error);
@@ -17,13 +17,7 @@ router.get("/", middle.requiresLogin, (req, res, next) => {
   });
 });
 
-router.post("/", function(req, res, next) {
-  if (!req.session.userId) {
-    var err = new Error("You are not authorized to view this page.");
-    err.status = 403;
-    return next(err);
-  }
-
+router.post("/", requiresLogin, function(req, res, next) {
   User.findOneAndUpdate(
     { _id: req.session.userId },
     {
