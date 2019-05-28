@@ -2,9 +2,9 @@ const express = require("express"),
   router = express.Router([{ mergeParams: true }]),
   User = require("../../models/user"),
   Message = require("../../models/messages"),
-  middle = require("../../middleware");
+  { requiresLogin, isCurrentUser } = require("../../middleware");
 
-router.get("/message/:messageId", middle.requiresLogin, async function(
+router.get("/message/:messageId", requiresLogin, async function(
   req,
   res,
   next
@@ -28,38 +28,36 @@ router.get("/message/:messageId", middle.requiresLogin, async function(
   });
 });
 
-router.get(
-  "/messages/:userId",
-  middle.requiresLogin,
-  middle.isCurrentUser,
-  function(req, res, next) {
-    Message.deleteMany({ user: { $in: req.params.userId } }).exec(function(
-      error
-    ) {
-      if (error) {
-        return next(error);
-      } else {
-        return res.redirect("/profile");
-      }
-    });
-  }
-);
+router.get("/messages/:userId", requiresLogin, isCurrentUser, function(
+  req,
+  res,
+  next
+) {
+  Message.deleteMany({ user: { $in: req.params.userId } }).exec(function(
+    error
+  ) {
+    if (error) {
+      return next(error);
+    } else {
+      return res.redirect("/profile");
+    }
+  });
+});
 
-router.get(
-  "/user/:userId",
-  middle.requiresLogin,
-  middle.isCurrentUser,
-  async function(req, res, next) {
-    await Message.deleteMany({ user: { $in: req.session.userId } });
+router.get("/user/:userId", requiresLogin, isCurrentUser, async function(
+  req,
+  res,
+  next
+) {
+  await Message.deleteMany({ user: { $in: req.session.userId } });
 
-    await User.deleteOne({ _id: req.session.userId }).exec(function(error) {
-      if (error) {
-        return next(error);
-      } else {
-        return res.redirect("/logout");
-      }
-    });
-  }
-);
+  await User.deleteOne({ _id: req.session.userId }).exec(function(error) {
+    if (error) {
+      return next(error);
+    } else {
+      return res.redirect("/logout");
+    }
+  });
+});
 
 module.exports = router;
