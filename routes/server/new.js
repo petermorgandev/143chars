@@ -1,9 +1,9 @@
 const express = require("express"),
   router = express.Router(),
   Message = require("../../models/messages"),
-  middle = require("../../middleware");
+  { requiresLogin } = require("../../middleware");
 
-router.get("/", middle.requiresLogin, (req, res, next) => {
+router.get("/", requiresLogin, (req, res, next) => {
   if (!req.session.userId) {
     var err = new Error("You are not authorized to view this page.");
     err.status = 403;
@@ -12,7 +12,7 @@ router.get("/", middle.requiresLogin, (req, res, next) => {
   return res.render("new", { title: "New Message" });
 });
 
-router.post("/", middle.requiresLogin, (req, res, next) => {
+router.post("/", requiresLogin, (req, res, next) => {
   var messageData = {
     userId: req.session.userId,
     message: req.body.messageInput,
