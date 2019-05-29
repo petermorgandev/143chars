@@ -32,14 +32,12 @@ UserSchema.statics.authenticate = function(username, password, callback) {
 };
 
 UserSchema.pre("save", function(next) {
-  var user = this;
-  bcrypt.hash(user.password, 10, function(err, hash) {
-    if (err) {
-      return next(err);
-    }
-    user.password = hash;
-    next();
-  });
+  bcrypt.hash(this.password, 10)
+    .then((hash) => {
+      this.password = hash;
+      next();
+    })
+    .catch(error => next(error));
 });
 
 const User = mongoose.model("User", UserSchema);
