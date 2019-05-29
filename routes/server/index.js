@@ -6,32 +6,11 @@ const newRoutes = require("./new");
 const profile = require("./profile");
 const register = require("./register");
 const settingsRoutes = require("./settings");
-const Message = require("../../models/messages");
+const controllers = require('../../controllers/server/index');
 
 
-router.get("/", (req, res, next) => {
-  if (!req.session.userId) {
-    return res.render("index", { title: "Welcome" });
-  }
-
-  Message.find()
-  .sort({ date: -1 })
-  .populate("user", "-password")
-  .exec()
-  .then(messages => res.render("home", { title: "Home", messages }))
-  .catch(error => next(error));
-});
-
-router.get("/logout", (req, res, next) => {
-  if (req.session) {
-    req.session.destroy(function(err) {
-      if (err) {
-        return next(err);
-      }
-      return res.redirect("/");
-    });
-  }
-});
+router.get("/", controllers.homepage);
+router.get("/logout", controllers.logout);
 
 router.use("/delete", deleteRoutes);
 router.use("/login", logIn);
