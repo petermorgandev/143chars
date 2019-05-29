@@ -24,6 +24,16 @@ function isCurrentUser(req, res, next) {
   return next(err);
 }
 
+function checkLogin (req, res, next) {
+  const condition = req.body.usernameInput && req.body.passwordInput;
+  if (condition) {
+    return next();
+  }
+  const err = new Error("Username and password are required to log in.");
+  err.status = 401;
+  return next(err);
+}
+
 function checkRegister (req, res, next) {
   const condition = req.body.usernameInput && req.body.passwordInput && req.body.avatarInput;
   if (condition){
@@ -38,3 +48,4 @@ module.exports.loggedOut = loggedOut;
 module.exports.requiresLogin = requiresLogin;
 module.exports.isCurrentUser = isCurrentUser;
 module.exports.checkRegister = checkRegister;
+module.exports.checkLogin = checkLogin;
