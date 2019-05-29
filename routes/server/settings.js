@@ -1,28 +1,9 @@
-const express = require("express"),
-  router = express.Router(),
-  User = require("../../models/user"),
-  { requiresLogin } = require("../../middleware");
+const express = require("express");
+const router = express.Router();
+const { requiresLogin } = require("../../middleware");
+const controllers = require('../../controllers/server/settings');
 
-router.get("/", requiresLogin, (req, res, next) => {
-  const locals = {
-    title: "User Settings",
-    username: user[0].username,
-    userId: req.session.userId
-  };
-
-  User.find({ _id: { $in: req.session.userId } })
-    .exec()
-    .then(user => res.render("settings", locals))
-    .catch(error => next(error));
-});
-
-router.post("/", requiresLogin, (req, res, next) => {
-  const condition = { _id: req.session.userId };
-  const fieldsToUpdate = { $set: { avatar: req.body.avatarInput, username: req.body.usernameInput } };
-  User.findOneAndUpdate(condition, fieldsToUpdate)
-    .exec()
-    .then(() => res.redirect("/"))
-    .catch(error => next(error));
-});
+router.get("/", requiresLogin, controllers.getSettingsView);
+router.post("/", requiresLogin, controllers.postSettings);
 
 module.exports = router;
