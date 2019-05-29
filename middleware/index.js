@@ -24,6 +24,17 @@ function isCurrentUser(req, res, next) {
   return next(err);
 }
 
+function checkRegister (req, res, next) {
+  const condition = req.body.usernameInput && req.body.passwordInput && req.body.avatarInput;
+  if (condition){
+    return next();
+  }
+  const err = new Error("All fields are required to register.");
+  err.status = 400;
+  return next(err);
+}
+
 module.exports.loggedOut = loggedOut;
 module.exports.requiresLogin = requiresLogin;
 module.exports.isCurrentUser = isCurrentUser;
+module.exports.checkRegister = checkRegister;

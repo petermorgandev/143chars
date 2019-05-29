@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { loggedOut } = require("../../middleware");
+const { loggedOut, checkRegister } = require("../../middleware");
 const controllers = require('../../controllers/server/register');
 
 router.route("/")
   .get(loggedOut, controllers.getRegisterView)
-  .post(controllers.postRegister);
+  .post(checkRegister, controllers.postRegister);
 
 module.exports = router;
