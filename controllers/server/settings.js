@@ -1,12 +1,12 @@
 const User = require("../../models/user");
 
 const getSettingsView = (req, res, next) => {
-  User.find({ _id: { $in: req.session.userId } })
+  User.findOne({ _id: { $in: req.session.userId } })
     .exec()
     .then((user) => {
       const locals = {
         title: "User Settings",
-        username: user[0].username,
+        username: user.username,
         userId: req.session.userId
       };
       return res.render("settings", locals)})
