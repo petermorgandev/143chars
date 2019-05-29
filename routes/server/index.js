@@ -14,14 +14,12 @@ router.get("/", (req, res, next) => {
     return res.render("index", { title: "Welcome" });
   }
 
-  const locals = { title: "Home", messages };
-  
   Message.find()
-    .sort({ date: -1 })
-    .populate("user", "-password")
-    .exec()
-    .then(messages => res.render("home", locals))
-    .catch(error => next(error));
+  .sort({ date: -1 })
+  .populate("user", "-password")
+  .exec()
+  .then(messages => res.render("home", { title: "Home", messages }))
+  .catch(error => next(error));
 });
 
 router.get("/logout", (req, res, next) => {
