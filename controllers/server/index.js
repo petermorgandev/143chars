@@ -6,11 +6,11 @@ const homepage = (req, res, next) => {
   }
 
   Message.find()
-  .sort({ date: -1 })
-  .populate("user", "-password")
-  .exec()
-  .then(messages => res.render("home", { title: "Home", messages }))
-  .catch(error => next(error));
+    .sort({ date: -1 })
+    .populate("user", "-password")
+    .exec()
+    .then(messages => res.render("home", { title: "Home", messages }))
+    .catch(error => next(error));
 }
 
 const logout = (req, res, next) => {
