@@ -9,13 +9,12 @@ const postRegister = (req, res, next) => {
     avatar: req.body.avatarInput
   };
 
-  User.create(userData, function(error, user) {
-    if (error) {
-      return next(error);
-    }
-    req.session.userId = user._id;
-    return res.redirect("/");
-  });
+  User.create(userData)
+    .then(user => {
+      req.session.userId = user._id;
+      return res.redirect("/");
+    })
+    .catch(error => next(error));
 };
 
 module.exports.getRegisterView = getRegisterView;
