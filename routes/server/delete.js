@@ -6,8 +6,9 @@ const { requiresLogin, isCurrentUser } = require("../../middleware");
 
 router.get("/message/:messageId", requiresLogin, async (req, res, next) => {
   const getUserId = await Message.findById({ _id: req.params.messageId });
-
-  if (!req.session.userId || getUserId.user != req.session.userId) {
+  
+  const condition = !req.session.userId || getUserId.user != req.session.userId;
+  if (condition) {
     const err = new Error("You are not authorized to view this page.");
     err.status = 403;
     return next(err);

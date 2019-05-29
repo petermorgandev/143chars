@@ -4,23 +4,21 @@ const express = require("express"),
   { requiresLogin } = require("../../middleware");
 
 router.get("/", requiresLogin, (req, res, next) => {
+  const locals = {
+    title: "User Settings",
+    username: user[0].username,
+    userId: req.session.userId
+  };
+
   User.find({ _id: { $in: req.session.userId } })
     .exec()
-    .then(user =>
-      res.render("settings", {
-        title: "User Settings",
-        username: user[0].username,
-        userId: req.session.userId
-      })
-    )
+    .then(user => res.render("settings", locals))
     .catch(error => next(error));
 });
 
 router.post("/", requiresLogin, (req, res, next) => {
   const condition = { _id: req.session.userId };
-  const fieldsToUpdate = {
-    $set: { avatar: req.body.avatarInput, username: req.body.usernameInput }
-  };
+  const fieldsToUpdate = { $set: { avatar: req.body.avatarInput, username: req.body.usernameInput } };
   User.findOneAndUpdate(condition, fieldsToUpdate)
     .exec()
     .then(() => res.redirect("/"))

@@ -15,11 +15,8 @@ function requiresLogin(req, res, next) {
 }
 
 function isCurrentUser(req, res, next) {
-  if (
-    req.session &&
-    req.session.userId &&
-    req.session.userId === req.params.userId
-  ) {
+  const condition = req.session && req.session.userId && req.session.userId === req.params.userId;
+  if (condition) {
     return next();
   }
   const err = new Error("You are not authorized to view this page.");

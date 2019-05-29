@@ -13,11 +13,14 @@ router.get("/", (req, res, next) => {
   if (!req.session.userId) {
     return res.render("index", { title: "Welcome" });
   }
+
+  const locals = { title: "Home", messages };
+  
   Message.find()
     .sort({ date: -1 })
     .populate("user", "-password")
     .exec()
-    .then(messages => res.render("home", { title: "Home", messages }))
+    .then(messages => res.render("home", locals))
     .catch(error => next(error));
 });
 
