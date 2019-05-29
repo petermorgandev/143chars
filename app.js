@@ -1,20 +1,20 @@
-const express = require("express"),
-  bodyParser = require("body-parser"),
-  mongoose = require("mongoose"),
-  session = require("express-session"),
-  mongoStore = require("connect-mongo")(session),
-  moment = require("moment"),
-  logger = require("morgan"),
-  cors = require("cors"),
-  app = express(),
-  corsOptions = {
-    origin: "http://localhost:8080",
-    credentials: true
-  },
-  dotenv = require("dotenv").config(),
-  port = process.env.PORT || 3000,
-  MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/143chars",
-  SESSION_SECRET = process.env.SESSION_SECRET;
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const mongoStore = require("connect-mongo")(session);
+const moment = require("moment");
+const logger = require("morgan");
+const cors = require("cors");
+const app = express();
+const corsOptions = {
+  origin: "http://localhost:8080",
+  credentials: true
+};
+const dotenv = require("dotenv").config();
+const port = process.env.PORT || 3000;
+const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/143chars";
+const SESSION_SECRET = process.env.SESSION_SECRET;
 
 app.locals.moment = require("moment");
 
