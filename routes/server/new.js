@@ -3,7 +3,8 @@ const router = express.Router();
 const { requiresLogin } = require("../../middleware");
 const controllers = require('../../controllers/server/new');
 
-router.get("/", requiresLogin, controllers.getnewView);
-router.post("/", requiresLogin, controllers.postNew);
+router.route("/")
+  .get(requiresLogin, controllers.getnewView)
+  .post(requiresLogin, controllers.postNew);
 
 module.exports = router;
