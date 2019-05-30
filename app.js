@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const mongoStore = require("connect-mongo")(session);
@@ -42,8 +41,8 @@ app.set("view engine", "pug");
 
 app.use(logger("dev"));
 app.use(cors(corsOptions));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/", require("./routes/server"));
 app.use("/api", require("./routes/api"));
