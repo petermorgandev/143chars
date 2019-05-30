@@ -1,12 +1,20 @@
 const User = require("../../models/user");
 const Message = require("../../models/messages");
 
-const getProfileView = (req, res) => res.redirect(`/profile/${req.session.userId}`);
+const getProfileView = (req, res) => {
+  User.findOne({ _id: { $in: req.session.userId } })
+  .exec()
+  .then(user => {
+    const username = user.username;
+    res.redirect(`/profile/${username}`)
+  })
+  
+};
 
 const getProfileById = async (req, res, next) => {
-  const user = await User.findOne({ _id: { $in: req.params.userId } });
+  const user = await User.findOne({ username: { $in: req.params.username } });
 
-  await Message.find({ user: { $in: req.params.userId } })
+  await Message.find({ user: { $eq: user._id } })
     .sort({ date: -1 })
     .populate("user", "avatar username")
     .exec()
@@ -15,8 +23,8 @@ const getProfileById = async (req, res, next) => {
         title: `${user.username} s Profile`,
         messages,
         username: user.username,
-        profileId: req.params.userId,
-        userId: req.session.userId
+        profileId: user._id.toString(),
+        userId: req.session.userId.toString()
       };
       return res.render("profile", userData);
     })
