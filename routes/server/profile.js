@@ -5,6 +5,6 @@ const { requiresLogin } = require("../../middleware");
 
 router.get("/", requiresLogin, controllers.getProfileView);
 
-router.get("/:userId", requiresLogin, controllers.getProfileById);
+router.get("/:username", requiresLogin, controllers.getProfileById);
 
 module.exports = router;

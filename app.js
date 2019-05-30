@@ -6,6 +6,7 @@ const mongoStore = require("connect-mongo")(session);
 const moment = require("moment");
 const logger = require("morgan");
 const cors = require("cors");
+const { currentUser } = require("./middleware")
 const app = express();
 const corsOptions = {
   origin: "http://localhost:8080",
@@ -35,10 +36,7 @@ app.use(
   })
 );
 
-app.use(function(req, res, next) {
-  res.locals.currentUser = req.session.userId;
-  next();
-});
+app.use(currentUser);
 
 app.set("view engine", "pug");
 
