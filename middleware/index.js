@@ -1,3 +1,5 @@
+const User = require("../models/user");
+
 function loggedOut(req, res, next) {
   if (req.session && req.session.userId) {
     return res.redirect("/");
@@ -44,8 +46,19 @@ function checkRegister (req, res, next) {
   return next(err);
 }
 
+const currentUser = (req, res, next) => {
+  User.findOne({ _id: { $eq: req.session.userId } })
+  .exec()
+  .then(user => {
+    res.locals.currentUser = user.username;
+    return next();
+  });
+
+}
+
 module.exports.loggedOut = loggedOut;
 module.exports.requiresLogin = requiresLogin;
 module.exports.isCurrentUser = isCurrentUser;
 module.exports.checkRegister = checkRegister;
 module.exports.checkLogin = checkLogin;
+module.exports.currentUser = currentUser;
