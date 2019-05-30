@@ -29,7 +29,16 @@ const deleteUser = async (req, res, next) => {
 
   await User.deleteOne({ _id: req.session.userId })
     .exec()
-    .then(() => res.redirect("/logout"))
+    .then(() => {
+      if (req.session) {
+        req.session.destroy(function(err) {
+          if (err) {
+            return next(err);
+          }
+          return res.redirect("/");
+        });
+      }
+    })
     .catch(error => next(error));
 }
 

@@ -46,14 +46,13 @@ function checkRegister (req, res, next) {
   return next(err);
 }
 
-const currentUser = (req, res, next) => {
-  User.findOne({ _id: { $eq: req.session.userId } })
-  .exec()
-  .then(user => {
+const currentUser = async (req, res, next) => {
+  if (req.session && req.session.userId){
+    const user = await User.findOne({ _id: { $in: req.session.userId } });
     res.locals.currentUser = user.username;
     return next();
-  });
-
+  }
+  next();
 }
 
 module.exports.loggedOut = loggedOut;
