@@ -13,7 +13,7 @@ const homepage = (req, res, next) => {
     .catch(error => next(error));
 }
 
-const logout = (req, res, next) => {
+const logOut = (req, res, next) => {
   if (req.session) {
     req.session.destroy(function(err) {
       if (err) {
@@ -25,4 +25,4 @@ const logout = (req, res, next) => {
 }
 
 module.exports.homepage = homepage;
-module.exports.logout = logout;
+module.exports.logOut = logOut;
