@@ -2,15 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const mongoStore = require("connect-mongo")(session);
-const moment = require("moment");
 const logger = require("morgan");
 const cors = require("cors");
 const { currentUser } = require("./middleware")
 const app = express();
-const corsOptions = {
-  origin: "http://localhost:8080",
-  credentials: true
-};
 const dotenv = require("dotenv").config();
 const port = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/143chars";
@@ -20,10 +15,8 @@ app.locals.moment = require("moment");
 
 mongoose.set("useFindAndModify", false);
 mongoose.set("useCreateIndex", true);
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true
-});
-var db = mongoose.connection;
+mongoose.connect(MONGO_URI, { useNewUrlParser: true });
+const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 
 app.use(
@@ -35,33 +28,30 @@ app.use(
   })
 );
 
-app.use(currentUser);
-
 app.set("view engine", "pug");
-
 app.use(logger("dev"));
-app.use(cors(corsOptions));
+app.use(cors({ origin: "http://localhost:8080", credentials: true }));
+app.use(currentUser);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(express.static("public"));
 app.use("/", require("./routes/server"));
 app.use("/api", require("./routes/api"));
 
-app.use(express.static("public"));
-
-app.use(function(req, res, next) {
-  var err = new Error("File Not Found");
+app.use((req, res, next) => {
+  let err = new Error("File Not Found");
   err.status = 404;
   next(err);
 });
 
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render("error", {
+app.use((err, req, res, next) => {
+  const params = {
     title: "Error",
     message: err.message,
     error: {}
-  });
+  };
+  res.status(err.status || 500);
+  res.render("error", params);
 });
 
 app.listen(port, () => {
