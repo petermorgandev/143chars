@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router([{ mergeParams: true }]);
-const controllers = require('../../controllers/server/profile');
+const { getProfileView, getProfileById } = require('../../controllers/server/profile');
 const { requiresLogin } = require("../../middleware");
 
-router.get("/", requiresLogin, controllers.getProfileView);
-
-router.get("/:username", requiresLogin, controllers.getProfileById);
+router.get("/", requiresLogin, getProfileView);
+router.get("/:username", requiresLogin, getProfileById);
 
 module.exports = router;
