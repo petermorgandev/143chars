@@ -6,14 +6,13 @@ const newRoutes = require("./new");
 const profile = require("./profile");
 const register = require("./register");
 const settingsRoutes = require("./settings");
-const controllers = require('../../controllers/server/index');
+const { homepage, logOut} = require('../../controllers/server/index');
 
 
-router.get("/", controllers.homepage);
-router.get("/logout", controllers.logout);
-
+router.get("/", homepage);
 router.use("/delete", deleteRoutes);
 router.use("/login", logIn);
+router.get("/logout", logOut);
 router.use("/new", newRoutes);
 router.use("/profile", profile);
 router.use("/register", register);
