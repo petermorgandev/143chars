@@ -16,24 +16,20 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-UserSchema.statics.authenticate = function(username, password, callback) {
-  User.findOne({ username: username })
-    .exec()
-    .then(user => {
-      bcrypt.compare(password, user.password)
-        .then(result => {
-          if (result === false) {
-            return callback();
-          } 
-          return callback(null, user);
-        })
-    })
-    .catch(error => callback(error));
+UserSchema.statics.authenticate = async (username, password, callback) => {
+  try {
+    const user = await User.findOne({ username: username }).exec();
+    const result = await bcrypt.compare(password, user.password)
+    if (!result) return callback(); 
+    return callback(null, user);
+  } catch (error) {
+    return callback(error);
+  }
 };
 
 UserSchema.pre("save", function(next) {
   bcrypt.hash(this.password, 10)
-    .then((hash) => {
+    .then(hash => {
       this.password = hash;
       next();
     })
