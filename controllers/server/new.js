@@ -9,12 +9,9 @@ const postNew = (req, res, next) => {
     user: req.session.userId
   };
 
-  Message.create(messageData, function(error, user) {
-    if (error) {
-      return next(error);
-    }
-    return res.redirect("/profile");
-  });
+  Message.create(messageData)
+    .then(() => res.redirect("/profile"))
+    .catch(error => next(error));
 };
 
 module.exports.getnewView = getnewView;
