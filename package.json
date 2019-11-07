@@ -19,7 +19,7 @@
   "homepage": "https://github.com/PeterMorganGH/143chars#readme",
   "dependencies": {
     "bcrypt": "^3.0.6",
-    "connect-mongo": "^2.0.3",
+    "connect-mongo": "^3.1.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
